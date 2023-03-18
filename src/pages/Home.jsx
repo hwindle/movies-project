@@ -1,31 +1,24 @@
-import React, { useContext } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
-import { MovieCard } from '../components/MovieCard'
-import NavComp from '../components/Navbar'
-import { PaginationComp } from '../components/PaginationComp'
-import { MovieContext } from '../context/MovieContext'
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+// import { MovieCard } from '../components/MovieCard'
+import NavBar from '../components/Navbar';
 
-
-export default function Home() {
-const {trendings,trendingTotalPages}=useContext(MovieContext)
-
+function Home() {
   return (
     <>
-    <NavComp/>
+      <NavBar />
       <Container className='mt-4'>
-  <Row md={3} xs={1} lg={4} className="g-4">
-    {trendings?.map((item)=>
-          <Col key={item.id}>
-  <MovieCard movie={item}/>
-          </Col>
-    )}
-      
-      </Row>
-      <div className="mt-5 d-flex justify-content-center">
-    <PaginationComp totalPages={trendingTotalPages}/>
-      </div>
+        <Row md={3} xs={1} lg={4} className='g-4'>
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
+            <Col key={item.id}>
+              A film card
+              {/* <MovieCard movie={item}/> */}
+            </Col>
+          ))}
+        </Row>
       </Container>
-    
     </>
-  )
+  );
 }
+
+export default Home;
