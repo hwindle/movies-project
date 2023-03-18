@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import NavBar from '../components/Navbar';
-//import { SearchComp } from '../components/SearchComp';
+import SearchBar from '../components/SearchBar';
 //import { MovieCard } from '../components/MovieCard';
 
 export default function Search() {
@@ -10,7 +10,7 @@ export default function Search() {
       <NavBar />
       <Container className='mt-4'>
         <div className='wrapper mt-4'>
-          {/* <SearchComp /> */}
+          <SearchBar />
           <Row md={3} xs={1} lg={4} className='g-4 mt-3'>
             {/* {movieSearchResults?.map((item) => (
               <Col key={item.id}>
