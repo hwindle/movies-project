@@ -5,6 +5,17 @@ import SearchBar from '../components/SearchBar';
 //import { MovieCard } from '../components/MovieCard';
 
 export default function Search() {
+
+  // handlers for movie card icons/buttons
+
+  const infoHandler = (e) => {
+    console.log('Hey we are in the movie info handler');
+  };
+
+  const favHandler = (e) => {
+    console.log('Hey we are in the add to favourites handler');
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchSubmitStatus, setSearchSubmitStatus] = useState(false);
 
@@ -26,16 +37,29 @@ export default function Search() {
     }
   }
 
+
   return (
     <>
       <NavBar />
+
+      <Container className="mt-4">
+        <div className="wrapper mt-4">
+          
+          <Row md={3} xs={1} lg={4} className="g-4 mt-3">
+            {movieSearchResults?.map((item) => (
+
       <Container className='mt-4'>
         <div className='wrapper mt-4'>
           <SearchBar handleSearch={handleSearch} onChangeHandler={onChangeHandler} />
           <Row md={3} xs={1} lg={4} className='g-4 mt-3'>
             {/* {movieSearchResults?.map((item) => (
+
               <Col key={item.id}>
-                <MovieCard movie={item} />
+                <MovieCard
+                  movie={item}
+                  infohandler={infoHandler}
+                  favhandler={favHandler}
+                />
               </Col>
             ))} */}
             {[0, 1, 2, 3, 4].map((item) => (
