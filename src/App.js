@@ -2,7 +2,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Movies from './pages/Movies';
-
+import Search from './pages/Search';
 import NotFound from './pages/NotFound';
 
 function App() {

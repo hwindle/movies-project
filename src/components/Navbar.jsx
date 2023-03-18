@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, Container, Form, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 import { Link, useLocation } from 'react-router-dom';
-import { nav_links } from '../helpers/data';
 
 export default function NavComp() {
   const params = useLocation();
   const currentPath = params.pathname;
+  // react-router route links
+  const routeLinks = ['/', '/favourites', '/search'];
 
   return (
     <Navbar className='navbar' expand='lg'>
@@ -21,7 +22,7 @@ export default function NavComp() {
             className='me-auto my-2 my-lg-0 d-flex gap-3'
             style={{ maxHeight: '100px' }}
             navbarScroll>
-            {nav_links.map((item) => (
+            {routeLinks.map((item) => (
               <Link
                 key={item.id}
                 to={item.href}
