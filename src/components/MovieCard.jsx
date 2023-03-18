@@ -20,25 +20,25 @@ function MovieCard(props) {
           <div>
             <button
               style={{ marginRight: '3px', border: '0px' }}
-              //onClick={props.btn2cb}
+              onClick={props.infohandler}
               idx={props.idx}
               data-tooltip-id="viewTip"
               data-tooltip-content="Movie Info"
             >
-              <InfoSquare color="gray" size={32} />
+              <InfoSquare color="gray" size={32} onClick={props.infohandler} />
               <Tooltip id="viewTip" />
             </button>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <button
               style={{ marginRight: '3px', border: '0px' }}
-              onClick={props.btn1cb}
+              onClick={props.favhandler}
               idx={props.idx}
               data-tooltip-id="favTip"
               data-tooltip-content="Add to Favourites"
             >
               <Star
-                // onClick={props.btn2cb}
+                onClick={props.favhandler}
                 idx={props.idx}
                 color="gray"
                 size={32}
