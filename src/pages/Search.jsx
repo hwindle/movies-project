@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import NavBar from '../components/Navbar';
-import { SearchComp } from '../components/SearchComp';
+//import { SearchComp } from '../components/SearchComp';
 //import { MovieCard } from '../components/MovieCard';
 
 export default function Search() {
