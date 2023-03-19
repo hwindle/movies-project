@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
 import NavBar from '../components/Navbar';
+import { favouriteFilms } from '../MoviesAPI/MoviesAPI';
 
 export default function Movies() {
   // handlers for movie card icons/buttons
@@ -19,8 +20,9 @@ export default function Movies() {
   
 
   // search the database for favourite film
-  const getFavourites = () => {
-    
+  const getFavourites = async () => {
+    const results = await favouriteFilms();
+    setMovieData(results.results);
   };
 
   // useEffect - on first render
