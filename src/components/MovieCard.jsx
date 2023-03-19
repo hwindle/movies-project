@@ -11,7 +11,7 @@ function MovieCard(props) {
 
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={poster_path} />
+      <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original/${poster_path}`} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">

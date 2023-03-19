@@ -10,6 +10,7 @@ const SearchBar = ({ handleSearch, onChangeHandler }) => {
         className='search-box py-2'
         placeholder='search films'
         onChange={onChangeHandler}
+        minLength='2'
       />
       <Button
         style={{
