@@ -63,7 +63,7 @@ function MovieCard(props) {
                 data-tooltip-id="delTip"
                 data-tooltip-content="Delete Movie"
               >
-                <Star
+                <Trash3
                   onClick={props.delhandler}
                   idx={props.idx}
                   color="gray"
