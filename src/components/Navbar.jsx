@@ -16,7 +16,9 @@ function NavBar() {
   return (
     <Navbar className='navbar' expand='lg'>
       <Container>
-        <Navbar.Brand href='#'>My Film Favourites</Navbar.Brand>
+        <Navbar.Brand style={{ color: 'white', fontWeight: 'bold' }} href='#'>
+          My Film Favourites
+        </Navbar.Brand>
 
         <Navbar.Collapse>
           <Nav
@@ -27,13 +29,12 @@ function NavBar() {
               <Link
                 key={id}
                 to={item.href}
-                // style={{
-                //   color: currentPath === item.href ? 'white' : '#afafaf',
-                //   display: 'flex',
-                //   alignItems: 'center',
-                //   fontWeight: currentPath === item.href ? 'bold' : 'medium',
-                // }}
-              >
+                style={{
+                  color: currentPath === item.href ? 'white' : '#afafaf',
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontWeight: currentPath === item.href ? 'bold' : 'medium',
+                }}>
                 {item.title}
               </Link>
             ))}
