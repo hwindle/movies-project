@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
 import NavBar from '../components/Navbar';
-import { favouriteFilms } from '../MoviesAPI/MoviesAPI';
+import { favouriteFilms } from '../MovieAPI/MovieAPI';
 
 export default function Movies() {
   // handlers for movie card icons/buttons
