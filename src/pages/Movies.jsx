@@ -22,7 +22,7 @@ export default function Movies() {
   // search the database for favourite film
   const getFavourites = async () => {
     const results = await favouriteFilms();
-    setMovieData(results.results);
+    setMovieData(results);
   };
 
   // useEffect - on first render
@@ -39,7 +39,7 @@ export default function Movies() {
         <div className='wrapper mt-4'>
           <Row md={3} xs={1} lg={4} className='g-4'>
             {movieData?.map((item) => (
-              <Col key={item.movie_id}>
+              <Col key={item.apiId}>
                 <MovieCard movie={item} />
               </Col>
             ))}
