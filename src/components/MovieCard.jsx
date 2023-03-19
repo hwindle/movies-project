@@ -2,6 +2,8 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack';
 import { Tooltip } from 'react-tooltip';
+import { InfoSquare } from 'react-bootstrap-icons';
+import { Star } from 'react-bootstrap-icons';
 
 function MovieCard(props) {
   const movie = props.movie;
