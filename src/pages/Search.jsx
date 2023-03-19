@@ -18,13 +18,16 @@ export default function Search() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchSubmitStatus, setSearchSubmitStatus] = useState(false);
+  // state for the movies results
+  const [movieData, setMovieData] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchSubmitStatus(true);
     setSearchTerm(e.target.value);
     // actually search for movies, passing in prop here
-    console.log(searchTerm);
+    searchMovies(searchTerm);
+    //console.log(searchTerm);
     // once the movie state is set
     setSearchSubmitStatus(false);
   };
@@ -36,6 +39,11 @@ export default function Search() {
       console.log(searchTerm);
     }
   }
+
+  // search the API for films
+  const searchMovies = (searchTerm) => {
+    const cleanedSearchTerm = searchTerm.replace('\s{1,}', '+');
+  };
 
 
   return (
