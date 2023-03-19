@@ -42,7 +42,8 @@ export default function Search() {
 
   // search the API for films
   const searchMovies = (searchTerm) => {
-    const cleanedSearchTerm = searchTerm.replace('\s{1,}', '+');
+    const cleanedSearchTerm = searchTerm.replace(/\s{1,}/g, '+');
+    console.log(cleanedSearchTerm.trim());
   };
 
 
