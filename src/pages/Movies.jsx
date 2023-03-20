@@ -40,7 +40,7 @@ export default function Movies() {
           <Row md={2} xs={1} lg={3} xl={4} className='g-4'>
             {movieData?.map((item) => (
               <Col key={item.apiId}>
-                <MovieCard movie={item} />
+                <MovieCard movie={item} buttonvariant={'2'} />
               </Col>
             ))}
           </Row>

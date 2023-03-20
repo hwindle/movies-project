@@ -160,6 +160,7 @@ export default function Search() {
                   favhandler={favHandler}
                   delhandler={delHandler}
                   idx={iconIndex++}
+                  buttonvariant={'1'}
                 />
               </Col>
             ))}
