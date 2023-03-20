@@ -21,6 +21,7 @@ export default function Search() {
     // actually search for movies, passing in prop here
     searchMovies(searchTerm);
     //console.log(searchTerm);
+    setSearchTerm('');
     // once the movie state is set
     setSearchSubmitStatus(false);
   };
@@ -143,13 +144,14 @@ export default function Search() {
     <>
       <NavBar />
 
-      <Container className="mt-4">
+      <Container className="mt-4" fluid>
         <div className="wrapper mt-4">
           <SearchBar
             handleSearch={handleSearch}
             onChangeHandler={onChangeHandler}
+            value={searchTerm}
           />
-          <Row md={3} xs={1} lg={4} className="g-4 mt-3">
+          <Row md={2} xs={1} lg={3} xl={4} className="g-4 mt-3">
             {movieData?.map((item) => (
               <Col key={item.id}>
                 <MovieCard

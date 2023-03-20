@@ -33,8 +33,8 @@ function Home() {
   return (
     <>
       <NavBar />
-      <Container className="mt-4">
-        <Row md={3} xs={1} lg={4} className="g-4">
+      <Container className="mt-4" fluid>
+        <Row md={2} xs={1} lg={3} xl={4} className="g-4">
           {showEmpty && <p>Your List is Empty ¯\_(ツ)_/¯</p>}
           {showItems &&
             movies.map((item, index) => (

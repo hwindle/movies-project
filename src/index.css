@@ -33,7 +33,7 @@ div.card {
   /* font-size: 1.5rem; */
   background-color: #1e1e1e;
   color: white;
-  margin: 1rem;
+  margin: 0.5rem;  
   width: auto !important;
   transition: all 0.3s ease-in-out;
 }
@@ -62,9 +62,14 @@ div.card:hover {
 
 
 @media screen and (max-width: 800px) {
+  div.card {
+    margin: 1rem;
+  }
+
   #movie-info {
     flex-direction: column;
   }
+
   #form {
     width: 100% !important;
   }
