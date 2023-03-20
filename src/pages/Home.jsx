@@ -39,7 +39,7 @@ function Home() {
           {showItems &&
             movies.map((item, index) => (
               <Col key={index}>
-                <MovieCard movie={item} />
+                <MovieCard movie={item} buttonvariant={'1'} />
               </Col>
             ))}
         </Row>

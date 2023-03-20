@@ -20,7 +20,7 @@ function NavBar() {
           My Film Favourites
         </Navbar.Brand>
 
-        <Navbar.Collapse>
+        <Navbar>
           <Nav
             className='me-auto my-2 my-lg-0 d-flex gap-3'
             style={{ maxHeight: '100px' }}
@@ -39,7 +39,7 @@ function NavBar() {
               </Link>
             ))}
           </Nav>
-        </Navbar.Collapse>
+        </Navbar>
       </Container>
     </Navbar>
   );
