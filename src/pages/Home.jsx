@@ -3,41 +3,42 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../components/MovieCard";
 import NavBar from "../components/Navbar";
+import InfoModal from '../components/InfoModal';
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
   const [showEmpty, setShowEmpty] = useState(false);
   const [showItems, setShowItems] = useState(false);
 
-  // const infoHandler = async (e) => {
-  //   console.log("Hey we are in the movie info handler");
-  //   let i = e.target.attributes.getNamedItem("idx").value;
-  //   console.log(i, "  index value");
+  const infoHandler = async (e) => {
+    console.log("Hey we are in the movie info handler");
+    let i = e.target.attributes.getNamedItem("idx").value;
+    console.log(i, "  index value");
 
-  //   const movieId = movieData[i].id;
-  //   let movieInfoData;
+    const movieId = movieData[i].id;
+    let movieInfoData;
 
-  //   // get data from id
+    // get data from id
 
-  //   try {
-  //     console.log("calling async api");
+    try {
+      console.log("calling async api");
 
-  //     const getUrl = `http://127.0.0.1:3001/moviedetails?id=${movieId}`;
-  //     console.log(getUrl);
-  //     movieInfoData = await axios.get(getUrl);
+      const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
+      console.log(getUrl);
+      movieInfoData = await axios.get(getUrl);
 
-  //     console.log(movieInfoData);
-  //   } catch (error) {
-  //     movieInfoData = {};
-  //     console.log(error);
-  //     console.log("error in acquiring movie data by id");
-  //     alert("Error in acquiring movie information");
-  //   }
+      console.log(movieInfoData);
+    } catch (error) {
+      movieInfoData = {};
+      console.log(error);
+      console.log("error in acquiring movie data by id");
+      alert("Error in acquiring movie information");
+    }
 
-  //   // create modal of movie data from id sent to server for DB request
+    // create modal of movie data from id sent to server for DB request
 
-  //   return <InfoModal data={movieInfoData} />;
-  // };
+    return <InfoModal data={movieInfoData} movieid={movieId} />;
+  };
 
   const favHandler = async (e) => {
     let i = e.target.attributes.getNamedItem("idx").value;
@@ -95,6 +96,7 @@ function Home() {
                   movie={item}
                   buttonvariant="1"
                   favhandler={favHandler}
+                  infohandler={infoHandler}
                   idx={index}
                 />
 

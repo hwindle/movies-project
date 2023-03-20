@@ -33,7 +33,7 @@ function MovieCard(props) {
                 <InfoSquare
                   color="gray"
                   size={32}
-                  // onClick={props.infohandler}
+                  //onClick={props.infohandler}
                   idx={props.idx}
                 />
                 <Tooltip id="viewTip" />
@@ -50,7 +50,7 @@ function MovieCard(props) {
                 data-tooltip-content="Add to Favourites"
               >
                 <Star
-                  onClick={props.favhandler}
+                  //onClick={props.favhandler}
                   idx={props.idx}
                   color="gray"
                   size={32}
