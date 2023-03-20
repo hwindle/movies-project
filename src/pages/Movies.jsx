@@ -8,6 +8,9 @@ import axios from 'axios';
 
 export default function Movies() {
   // handlers for movie card icons/buttons
+  // state for info modal
+  const [infoModalData, setInfoModalData] = useState([]);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const infoHandler = async (e) => {
     console.log("Hey we are in the movie info handler");
@@ -25,20 +28,19 @@ export default function Movies() {
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
-  
+      setInfoModalData(movieInfoData.data);
+      setShowInfoModal(true);
       console.log(movieInfoData);
     } catch (error) {
-      movieInfoData = {};
+      setInfoModalData([]);
       console.log(error);
       console.log("error in acquiring movie data by id");
       alert("Error in acquiring movie information");
     }
   
-    // create modal of movie data from id sent to server for DB request
-  
-    return <InfoModal data={movieInfoData} movieid={movieId} />;
   };
 
+  
   // delete handler function
 
   const delHandler = async (e) => {
@@ -52,13 +54,13 @@ export default function Movies() {
       try {
         console.log('calling async api');
         const tempObj = movieData[parseInt(i)];
-        const idStr = tempObj.id;
+        const idStr = tempObj._id;
         console.log(idStr);
-        const deleteUrl = `${process.env.REACT_APP_BE_LOCAL}/deleteMovie/${idStr}`;
+        const deleteUrl = `${process.env.REACT_APP_BE_LOCAL}/movies/${idStr}`;
         console.log(deleteUrl);
         const newFavouritesData = await axios.delete(deleteUrl);
 
-        setMovieData(newFavouritesData);
+        setMovieData(newFavouritesData.moviesArray);
       } catch (error) {
         console.log(error);
         alert(`error in delete request`);
@@ -81,7 +83,7 @@ export default function Movies() {
   // useEffect - on first render
   useEffect(() => {
     getFavourites();
-  }, []);
+  }, [movieData]);
 
 
   return (
@@ -102,6 +104,9 @@ export default function Movies() {
             ))}
           </Row>
         </div>
+        { showInfoModal &&
+          <InfoModal data={infoModalData} show={true} />
+        }
       </Container>
     </>
   );
