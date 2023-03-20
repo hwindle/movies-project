@@ -14,19 +14,19 @@ function Home() {
     console.log("Hey we are in the movie info handler");
     let i = e.target.attributes.getNamedItem("idx").value;
     console.log(i, "  index value");
-
-    const movieId = movieData[i].id;
+  
+    const movieId = movieData[parseInt(i)].id;
     let movieInfoData;
-
+  
     // get data from id
-
+  
     try {
       console.log("calling async api");
-
+  
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
-
+  
       console.log(movieInfoData);
     } catch (error) {
       movieInfoData = {};
@@ -34,9 +34,9 @@ function Home() {
       console.log("error in acquiring movie data by id");
       alert("Error in acquiring movie information");
     }
-
+  
     // create modal of movie data from id sent to server for DB request
-
+  
     return <InfoModal data={movieInfoData} movieid={movieId} />;
   };
 

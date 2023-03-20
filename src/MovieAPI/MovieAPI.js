@@ -22,3 +22,4 @@ export const favouriteFilms = async () => {
     console.error('Favourite films error: ', err);
   }
 };
+

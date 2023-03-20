@@ -26,7 +26,7 @@ function MovieCard(props) {
               <button
                 style={{ marginRight: '3px', border: '0px' }}
                 onClick={props.infohandler}
-                idx={props.idx}
+                //idx={props.idx}
                 data-tooltip-id="viewTip"
                 data-tooltip-content="Movie Info"
               >
@@ -67,7 +67,7 @@ function MovieCard(props) {
                 data-tooltip-content="Delete Movie"
               >
                 <Trash3
-                  onClick={props.delhandler}
+                  //onClick={props.delhandler}
                   idx={props.idx}
                   color="gray"
                   size={32}
