@@ -45,24 +45,24 @@ export default function Search() {
 
     // get data from id
 
-    try {
-      console.log('calling async api');
+    // try {
+    //   console.log('calling async api');
 
-      const getUrl = `http://127.0.0.1:3001/moviedetails?id=${movieId}`;
-      console.log(getUrl);
-      movieInfoData = await axios.get(getUrl);
+    //   const getUrl = `http://127.0.0.1:3001/moviedetails?id=${movieId}`;
+    //   console.log(getUrl);
+    //   movieInfoData = await axios.get(getUrl);
 
-      console.log(movieInfoData);
-    } catch (error) {
-      movieInfoData = {};
-      console.log(error);
-      console.log('error in acquiring movie data by id');
-      alert('Error in acquiring movie information');
-    }
+    //   console.log(movieInfoData);
+    // } catch (error) {
+    //   movieInfoData = {};
+    //   console.log(error);
+    //   console.log('error in acquiring movie data by id');
+    //   alert('Error in acquiring movie information');
+    // }
 
     // create modal of movie data from id sent to server for DB request
 
-    return <InfoModal data={movieInfoData} />;
+    return <InfoModal movieid={movieId} />;
   };
 
   // add to favourites handler
@@ -74,11 +74,11 @@ export default function Search() {
 
     const { id, title, poster_path, overview, release_date } = movieData[i];
     const favData = {
-      apiId: id,
+      id: id,
       title: title,
-      imageUrl: poster_path,
+      poster_path: poster_path,
       overview: overview,
-      releaseDate: release_date,
+      release_date: release_date,
     };
 
     try {
@@ -112,7 +112,7 @@ export default function Search() {
       try {
         console.log('calling async api');
         const tempObj = movieData[i];
-        const idStr = tempObj.apiId;
+        const idStr = tempObj.id;
         console.log(idStr);
         const deleteUrl = 'http://127.0.0.1:3001/deleteMovie/' + idStr;
         console.log(deleteUrl);
