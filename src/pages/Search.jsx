@@ -34,7 +34,10 @@ export default function Search() {
     }
   };
 
-  // handlers for movie card icons/buttons
+  // state for info modal
+  const [infoModalData, setInfoModalData] = useState([]);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+
   const infoHandler = async (e) => {
     console.log("Hey we are in the movie info handler");
     let i = e.target.attributes.getNamedItem("idx").value;
@@ -51,18 +54,16 @@ export default function Search() {
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
-  
+      setInfoModalData(movieInfoData.data);
+      setShowInfoModal(true);
       console.log(movieInfoData);
     } catch (error) {
-      movieInfoData = {};
+      setInfoModalData([]);
       console.log(error);
       console.log("error in acquiring movie data by id");
       alert("Error in acquiring movie information");
     }
   
-    // create modal of movie data from id sent to server for DB request
-  
-    return <InfoModal data={movieInfoData} movieid={movieId} />;
   };
   
 
@@ -139,6 +140,9 @@ export default function Search() {
             ))}
           </Row>
         </div>
+        { showInfoModal &&
+          <InfoModal data={infoModalData} show={true} />
+        }
       </Container>
     </>
   );

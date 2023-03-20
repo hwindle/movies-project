@@ -10,6 +10,10 @@ function Home() {
   const [showEmpty, setShowEmpty] = useState(false);
   const [showItems, setShowItems] = useState(false);
 
+  // state for info modal
+  const [infoModalData, setInfoModalData] = useState([]);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+
   const infoHandler = async (e) => {
     console.log("Hey we are in the movie info handler");
     let i = e.target.attributes.getNamedItem("idx").value;
@@ -26,18 +30,16 @@ function Home() {
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
-  
+      setInfoModalData(movieInfoData.data);
+      setShowInfoModal(true);
       console.log(movieInfoData);
     } catch (error) {
-      movieInfoData = {};
+      setInfoModalData([]);
       console.log(error);
       console.log("error in acquiring movie data by id");
       alert("Error in acquiring movie information");
     }
   
-    // create modal of movie data from id sent to server for DB request
-  
-    return <InfoModal data={movieInfoData} movieid={movieId} />;
   };
 
   const favHandler = async (e) => {
@@ -103,6 +105,9 @@ function Home() {
               </Col>
             ))}
         </Row>
+        { showInfoModal &&
+          <InfoModal data={infoModalData} show={true} />
+        }
       </Container>
     </>
   );

@@ -5,26 +5,28 @@ import axios from 'axios';
 
 function InfoModal(props) {
   const [show, setShow] = useState(true);
-  const [movieInfo, setInfoData] = useState([]);
+  const [movieInfo, setMovieInfo] = useState([]);
   const [refreshModal, setRefresh] = useState(true);
   const [validData, setValidData] = useState(false);
 
   // useEffect for getting products
 
   useEffect(() => {
-    console.log('inside the useEffect');
+    //console.log('inside the useEffect');
+    setShow(props.show);
 
     async function getInfo() {
       try {
         console.log('calling async api');
 
-        const movieUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${props.movieid}`;
-        const newData = await axios.get(movieUrl);
+        // const movieUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${props.movieid}`;
+        // const newData = await axios.get(movieUrl);
 
-        console.log(' here is the data   ', newData);
+        // console.log(' here is the data   ', newData);
 
         setRefresh(false);
-        setInfoData(newData);
+        setMovieInfo(props.data);
+        console.log(movieInfo);
         setValidData(true);
         // response.status(200).send(digiData);
       } catch (error) {
@@ -39,66 +41,72 @@ function InfoModal(props) {
     if (refreshModal) {
       getInfo();
     }
-  });
+  }, [props.movieid, refreshModal, props.show, movieInfo, props.data]);
 
   // handler for close button icon in header
 
   const handleClose = () => setShow(false);
 
   if (validData) {
+    let formattedTime = 0;
+    if (parseInt(movieInfo.runtime) > 60) {
+      formattedTime = Math.floor(parseInt(movieInfo.runtime) / 60) + ' hrs and ';
+      formattedTime += (parseInt(movieInfo.runtime) % 60) + ' mins';
+    } else {
+      formattedTime = movieInfo.runtime + ' mins';
+    }
+
     return (
-      <>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{movieInfo.title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Overview: </span>$
-                {movieInfo.overview}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Release Date: </span>$
-                {movieInfo.release_date}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Original Language: </span>$
-                {movieInfo.original_language}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Imdb ID: </span>$
-                {movieInfo.imdb_id}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Budget: </span>$
-                {movieInfo.budget}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Revenue: </span>$
-                {movieInfo.revenue}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Run time: </span>$
-                {movieInfo.runtime}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Popularity: </span>$
-                {movieInfo.popularity}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Vote Count: </span>$
-                {movieInfo.vote_count}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Vote Average: </span>$
-                {movieInfo.vote_average}
-              </p>
-            </div>
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
-      </>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{movieInfo.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Overview: </span>
+              {movieInfo.overview}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Release Date: </span>
+              {movieInfo.release_date}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Original Language: </span>
+              {movieInfo.original_language}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Imdb ID: </span>IMDB id: 
+              {movieInfo.imdb_id}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Budget: </span>$
+              {movieInfo.budget}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Revenue: </span>$
+              {movieInfo.revenue}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Run time: </span>
+              {formattedTime}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Popularity: </span>Popularity: 
+              {movieInfo.popularity}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Vote Count: </span>Vote count: 
+              {movieInfo.vote_count}
+            </p>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Vote Average: </span>Vote avg: 
+              {movieInfo.vote_average}
+            </p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
     );
   }
 }
