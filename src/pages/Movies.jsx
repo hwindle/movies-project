@@ -34,13 +34,13 @@ export default function Movies() {
   return (
     <>
       <NavBar />
-      <Container className='mt-4'>
-        <h2 style={{ textAlign: 'center' }}>Favourite Films</h2>
+      <Container className='mt-4' fluid>
+        <h2 style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7' }}>Favourite Films</h2>
         <div className='wrapper mt-4'>
-          <Row md={3} xs={1} lg={4} className='g-4'>
+          <Row md={2} xs={1} lg={3} xl={4} className='g-4'>
             {movieData?.map((item) => (
               <Col key={item.apiId}>
-                <MovieCard movie={item} />
+                <MovieCard movie={item} buttonvariant={'2'} />
               </Col>
             ))}
           </Row>

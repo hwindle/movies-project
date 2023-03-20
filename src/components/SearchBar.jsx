@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-const SearchBar = ({ handleSearch, onChangeHandler }) => {
+const SearchBar = ({ handleSearch, onChangeHandler, value }) => {
   
 
   return (
@@ -11,6 +11,7 @@ const SearchBar = ({ handleSearch, onChangeHandler }) => {
         placeholder='search films'
         onChange={onChangeHandler}
         minLength='2'
+        value={value}
       />
       <Button
         style={{
