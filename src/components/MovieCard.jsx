@@ -50,7 +50,7 @@ function MovieCard(props) {
                 data-tooltip-content="Add to Favourites"
               >
                 <Star
-                  // onClick={props.favhandler}
+                  onClick={props.favhandler}
                   idx={props.idx}
                   color="gray"
                   size={32}
@@ -67,7 +67,7 @@ function MovieCard(props) {
                 data-tooltip-content="Delete Movie"
               >
                 <Trash3
-                  //onClick={props.delhandler}
+                  onClick={props.delhandler}
                   idx={props.idx}
                   color="gray"
                   size={32}

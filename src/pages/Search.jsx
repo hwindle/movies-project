@@ -46,20 +46,20 @@ export default function Search() {
 
     // get data from id
 
-    // try {
-    //   console.log('calling async api');
+    try {
+      //console.log('calling async api');
 
-    //   const getUrl = `http://127.0.0.1:3001/moviedetails?id=${movieId}`;
-    //   console.log(getUrl);
-    //   movieInfoData = await axios.get(getUrl);
+      const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
+      console.log(getUrl);
+      movieInfoData = await axios.get(getUrl);
 
-    //   console.log(movieInfoData);
-    // } catch (error) {
-    //   movieInfoData = {};
-    //   console.log(error);
-    //   console.log('error in acquiring movie data by id');
-    //   alert('Error in acquiring movie information');
-    // }
+      console.log(movieInfoData);
+    } catch (error) {
+      movieInfoData = {};
+      console.log(error);
+      console.log('error in acquiring movie data by id');
+      alert('Error in acquiring movie information');
+    }
 
     // create modal of movie data from id sent to server for DB request
 
@@ -85,7 +85,7 @@ export default function Search() {
     try {
       console.log('calling async api');
 
-      const postUrl = 'http://127.0.0.1:3001/addMovie';
+      const postUrl = `${process.env.REACT_APP_BE_LOCAL}/movies`;
       console.log(postUrl);
       const newFavouritesData = await axios.post(postUrl, favData);
 
@@ -115,7 +115,7 @@ export default function Search() {
         const tempObj = movieData[i];
         const idStr = tempObj.id;
         console.log(idStr);
-        const deleteUrl = 'http://127.0.0.1:3001/deleteMovie/' + idStr;
+        const deleteUrl = `${process.env.REACT_APP_BE_LOCAL}/deleteMovie/${idStr}`;
         console.log(deleteUrl);
         const newFavouritesData = await axios.delete(deleteUrl);
 

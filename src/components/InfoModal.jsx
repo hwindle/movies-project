@@ -18,7 +18,7 @@ function InfoModal(props) {
       try {
         console.log('calling async api');
 
-        const movieUrl = `http://127.0.0.1:3001/moviedetails?id=${props.movieid}`;
+        const movieUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${props.movieid}`;
         const newData = await axios.get(movieUrl);
 
         console.log(' here is the data   ', newData);
