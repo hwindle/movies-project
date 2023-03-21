@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../components/MovieCard";
 import NavBar from "../components/Navbar";
-import InfoModal from '../components/InfoModal';
+import InfoModal from "../components/InfoModal";
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
@@ -14,38 +14,35 @@ function Home() {
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const infoHandler = async (e) => {
-    console.log("Hey we are in the movie info handler");
-    let i = e.target.attributes.getNamedItem("idx").value;
-    console.log(i, "  index value");
-  
-    const movieId = movieData[parseInt(i)].id;
+  const handleClose = () => setShowInfoModal(false);
+
+  const infoHandler = async (idx) => {
+    console.log(idx);
+    const movieId = movieData[idx].id;
     let movieInfoData;
-  
+
     // get data from id
-  
+
     try {
       console.log("calling async api");
-  
+
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
       setShowInfoModal(true);
-      console.log(movieInfoData);
+      console.log(infoModalData);
+      console.log(showInfoModal);
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
       console.log("error in acquiring movie data by id");
       alert("Error in acquiring movie information");
     }
-  
   };
 
-  const favHandler = async (e) => {
-    let i = e.target.attributes.getNamedItem("idx").value;
-
-    const { id, title, poster_path, overview, release_date } = movieData[i];
+  const favHandler = async (idx) => {
+    const { id, title, poster_path, overview, release_date } = movieData[idx];
     const favData = {
       id: id,
       title: title,
@@ -93,7 +90,6 @@ function Home() {
           {showItems &&
             movieData.map((item, index) => (
               <Col key={index}>
-
                 <MovieCard
                   movie={item}
                   buttonvariant="1"
@@ -101,13 +97,15 @@ function Home() {
                   infohandler={infoHandler}
                   idx={index}
                 />
-
               </Col>
             ))}
         </Row>
-        { showInfoModal &&
-          <InfoModal data={infoModalData} show={true} />
-        }
+
+        <InfoModal
+          data={infoModalData}
+          show={showInfoModal}
+          handleClose={handleClose}
+        />
       </Container>
     </>
   );
