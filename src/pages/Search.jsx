@@ -38,19 +38,34 @@ export default function Search() {
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const infoHandler = async (e) => {
-    console.log("Hey we are in the movie info handler");
-    let i = e.target.attributes.getNamedItem("idx").value;
-    console.log(i, "  index value");
-  
-    const movieId = movieData[parseInt(i)].id;
+  const mainHandler = (iconFunction, index) => {
+    switch (iconFunction) {
+      case 'info':
+        infoHandler(index);
+        break;
+      case 'favourite':
+        favHandler(index);
+        break;
+      case 'delete': //delHandler(index);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const infoHandler = async (i) => {
+    console.log('Hey we are in the movie info handler');
+    //  let i = e.target.attributes.getNamedItem("idx").value;
+    console.log(i, '  index value');
+
+    const movieId = movieData[i].id;
     let movieInfoData;
-  
+
     // get data from id
-  
+
     try {
-      console.log("calling async api");
-  
+      console.log('calling async api');
+
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
@@ -60,18 +75,16 @@ export default function Search() {
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
-      console.log("error in acquiring movie data by id");
-      alert("Error in acquiring movie information");
+      console.log('error in acquiring movie data by id');
+      alert('Error in acquiring movie information');
     }
-  
   };
-  
 
   // add to favourites handler
 
-  const favHandler = async (e) => {
+  const favHandler = async (i) => {
     console.log('Hey we are in the add to favourites handler');
-    let i = e.target.attributes.getNamedItem('idx').value;
+    //  let i = e.target.attributes.getNamedItem('idx').value;
     console.log(i, '  index value');
 
     const { id, title, poster_path, overview, release_date } = movieData[i];
@@ -101,8 +114,6 @@ export default function Search() {
     }
   };
 
-  
-
   // search the API for films
   const searchMovies = async (searchTerm) => {
     const cleanedSearchTerm = searchTerm.replace(/\s{1,}/g, '+');
@@ -130,19 +141,16 @@ export default function Search() {
               <Col key={item.id}>
                 <MovieCard
                   movie={item}
-                  infohandler={infoHandler}
-                  favhandler={favHandler}
+                  handler={mainHandler}
+                  //favhandler={favHandler}
                   idx={index}
                   buttonvariant={'1'}
-
                 />
               </Col>
             ))}
           </Row>
         </div>
-        { showInfoModal &&
-          <InfoModal data={infoModalData} show={true} />
-        }
+        {showInfoModal && <InfoModal data={infoModalData} show={true} />}
       </Container>
     </>
   );

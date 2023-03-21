@@ -24,9 +24,9 @@ function InfoModal(props) {
 
         // console.log(' here is the data   ', newData);
 
-        setRefresh(false);
+        setRefresh(true);
         setMovieInfo(props.data);
-        console.log(movieInfo);
+        console.log('in modal ', movieInfo);
         setValidData(true);
         // response.status(200).send(digiData);
       } catch (error) {
@@ -50,7 +50,8 @@ function InfoModal(props) {
   if (validData) {
     let formattedTime = 0;
     if (parseInt(movieInfo.runtime) > 60) {
-      formattedTime = Math.floor(parseInt(movieInfo.runtime) / 60) + ' hrs and ';
+      formattedTime =
+        Math.floor(parseInt(movieInfo.runtime) / 60) + ' hrs and ';
       formattedTime += (parseInt(movieInfo.runtime) % 60) + ' mins';
     } else {
       formattedTime = movieInfo.runtime + ' mins';
@@ -76,7 +77,7 @@ function InfoModal(props) {
               {movieInfo.original_language}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Imdb ID: </span>IMDB id: 
+              <span style={{ fontWeight: 'bold' }}>Imdb ID: </span>IMDB id:
               {movieInfo.imdb_id}
             </p>
             <p>
@@ -92,15 +93,18 @@ function InfoModal(props) {
               {formattedTime}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Popularity: </span>Popularity: 
+              <span style={{ fontWeight: 'bold' }}>Popularity: </span>
+              Popularity:
               {movieInfo.popularity}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Vote Count: </span>Vote count: 
+              <span style={{ fontWeight: 'bold' }}>Vote Count: </span>Vote
+              count:
               {movieInfo.vote_count}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Vote Average: </span>Vote avg: 
+              <span style={{ fontWeight: 'bold' }}>Vote Average: </span>Vote
+              avg:
               {movieInfo.vote_average}
             </p>
           </div>

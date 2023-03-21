@@ -12,19 +12,34 @@ export default function Movies() {
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const infoHandler = async (e) => {
-    console.log("Hey we are in the movie info handler");
-    let i = e.target.attributes.getNamedItem("idx").value;
-    console.log(i, "  index value");
-  
-    const movieId = movieData[parseInt(i)].id;
+  const mainHandler = (iconFunction, index) => {
+    switch (iconFunction) {
+      case 'info':
+        infoHandler(index);
+        break;
+      case 'favourite': //favHandler(index);
+        break;
+      case 'delete':
+        delHandler(index);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const infoHandler = async (i) => {
+    console.log('Hey we are in the movie info handler');
+    //let i = e.target.attributes.getNamedItem('idx').value;
+    console.log(i, '  index value');
+
+    const movieId = movieData[i].id;
     let movieInfoData;
-  
+
     // get data from id
-  
+
     try {
-      console.log("calling async api");
-  
+      console.log('calling async api');
+
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
@@ -34,26 +49,24 @@ export default function Movies() {
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
-      console.log("error in acquiring movie data by id");
-      alert("Error in acquiring movie information");
+      console.log('error in acquiring movie data by id');
+      alert('Error in acquiring movie information');
     }
-  
   };
 
-  
   // delete handler function
 
-  const delHandler = async (e) => {
+  const delHandler = async (i) => {
     console.log('hey we are in the delete handler');
 
-    let i = e.target.attributes.getNamedItem('idx').value;
+    //let i = e.target.attributes.getNamedItem('idx').value;
     console.log(i, '  index value');
 
     if (window.confirm('Do you want to delete movie?')) {
       console.log('in delete');
       try {
         console.log('calling async api');
-        const tempObj = movieData[parseInt(i)];
+        const tempObj = movieData[i];
         const idStr = tempObj._id;
         console.log(idStr);
         const deleteUrl = `${process.env.REACT_APP_BE_LOCAL}/movies/${idStr}`;
@@ -72,7 +85,6 @@ export default function Movies() {
 
   // state for the movies results
   const [movieData, setMovieData] = useState([]);
-  
 
   // search the database for favourite film
   const getFavourites = async () => {
@@ -85,28 +97,28 @@ export default function Movies() {
     getFavourites();
   }, [movieData]);
 
-
   return (
     <>
       <NavBar />
-      <Container className='mt-4' fluid>
-        <h2 style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7' }}>Favourite Films</h2>
-        <div className='wrapper mt-4'>
-          <Row md={2} xs={1} lg={3} xl={4} className='g-4'>
+      <Container className="mt-4" fluid>
+        <h2 style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7' }}>
+          Favourite Films
+        </h2>
+        <div className="wrapper mt-4">
+          <Row md={2} xs={1} lg={3} xl={4} className="g-4">
             {movieData?.map((item, index) => (
               <Col key={item.apiId}>
-                <MovieCard movie={item}
-                  infohandler={infoHandler}
-                  delhandler={delHandler}
-                buttonvariant={'2'}
-                idx={index} />
+                <MovieCard
+                  movie={item}
+                  handler={mainHandler}
+                  buttonvariant={'2'}
+                  idx={index}
+                />
               </Col>
             ))}
           </Row>
         </div>
-        { showInfoModal &&
-          <InfoModal data={infoModalData} show={true} />
-        }
+        {showInfoModal && <InfoModal data={infoModalData} show={true} />}
       </Container>
     </>
   );
