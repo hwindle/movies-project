@@ -4,8 +4,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
 import NavBar from '../components/Navbar';
 import InfoModal from '../components/InfoModal';
-import { useContext } from 'react';
-import { Star } from 'react-bootstrap-icons';
+// import { useContext } from 'react';
+// import { Star } from 'react-bootstrap-icons';
 //import UserContext from '../App';
 
 
@@ -116,6 +116,7 @@ function Home() {
     }
   }, []);
 
+  console.log(modalClose);
   console.log(infoModalData);
 
   return (

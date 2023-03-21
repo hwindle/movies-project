@@ -13,6 +13,8 @@ export default function Movies() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [modalClose, setModalClose] = useState(true);
 
+  console.log(modalClose);
+
   const handleClose = () => (setModalClose(true));
 
   const mainHandler = (iconFunction, index) => {

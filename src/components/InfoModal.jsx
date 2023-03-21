@@ -40,12 +40,13 @@ function InfoModal(props) {
 
     if (refreshModal) {
       getInfo();
+      console.log(show);
     }
-  }, [props.movieid, refreshModal, props.show, movieInfo, props.data]);
+  }, [props.movieid, refreshModal, props.show, movieInfo, props.data, show]);
 
   // handler for close button icon in header
 
-  const handleClose = () => setShow(false);
+  //const handleClose = () => setShow(false);
 
   if (validData) {
     let formattedTime = 0;
