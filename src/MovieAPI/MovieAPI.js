@@ -6,7 +6,7 @@ export const filmByTitleActor = async (query) => {
   }
   try {
     const results = await axios.get(
-      `${process.env.REACT_APP_BE_LOCAL}/searchmovies?query=${query}`
+      `${process.env.REACT_APP_BE_PROD}/searchmovies?query=${query}`
     );
     return results.data;
   } catch (err) {
@@ -16,7 +16,7 @@ export const filmByTitleActor = async (query) => {
 
 export const favouriteFilms = async () => {
   try {
-    const results = await axios.get(`${process.env.REACT_APP_BE_LOCAL}/movies`);
+    const results = await axios.get(`${process.env.REACT_APP_BE_PROD}/movies`);
     return results.data;
   } catch (err) {
     console.error('Favourite films error: ', err);

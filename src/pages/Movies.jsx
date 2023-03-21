@@ -11,7 +11,9 @@ export default function Movies() {
   // state for info modal
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [modalClose, setModalClose] = useState(true);
 
+  const handleClose = () => (setModalClose(true));
 
   const mainHandler = (iconFunction, index) => {
     switch (iconFunction) {
@@ -44,11 +46,12 @@ export default function Movies() {
       console.log("calling async api");
 
 
-      const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
+      const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
       setShowInfoModal(true);
+      setModalClose(false);
       console.log(movieInfoData);
     } catch (error) {
       setInfoModalData([]);
@@ -77,7 +80,7 @@ export default function Movies() {
 
         const idStr = tempObj._id;
         console.log(idStr);
-        const deleteUrl = `${process.env.REACT_APP_BE_LOCAL}/movies/${idStr}`;
+        const deleteUrl = `${process.env.REACT_APP_BE_PROD}/movies/${idStr}`;
         console.log(deleteUrl);
         const newFavouritesData = await axios.delete(deleteUrl);
 

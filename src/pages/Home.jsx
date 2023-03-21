@@ -13,6 +13,9 @@ function Home() {
   const [movieData, setMovieData] = useState([]);
   const [showEmpty, setShowEmpty] = useState(false);
   const [showItems, setShowItems] = useState(false);
+  const [modalClose, setModalClose] = useState(true);
+
+  const handleClose = () => (setModalClose(true));
 
   // state for info modal
   const [infoModalData, setInfoModalData] = useState([]);
@@ -52,7 +55,7 @@ function Home() {
       console.log("calling async api");
 
 
-      const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
+      const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
@@ -82,7 +85,7 @@ function Home() {
     };
 
     try {
-      const postUrl = `${process.env.REACT_APP_BE_LOCAL}/movies`;
+      const postUrl = `${process.env.REACT_APP_BE_PROD}/movies`;
       await axios.post(postUrl, favData);
     } catch (error) {
       console.log(error);
@@ -92,10 +95,10 @@ function Home() {
 
   useEffect(() => {
     try {
-      console.log(`${process.env.REACT_APP_BE_LOCAL}/moviesapi`);
+      console.log(`${process.env.REACT_APP_BE_PROD}/moviesapi`);
       const getMovies = async () => {
         const movieData = await axios.get(
-          `${process.env.REACT_APP_BE_LOCAL}/moviesapi`
+          `${process.env.REACT_APP_BE_PROD}/moviesapi`
         );
         if (movieData.data.results.length > 0) {
           console.log(movieData.data.results);

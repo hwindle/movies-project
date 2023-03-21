@@ -13,6 +13,7 @@ export default function Search() {
   const [searchSubmitStatus, setSearchSubmitStatus] = useState(false);
   // state for the movies results
   const [movieData, setMovieData] = useState([]);
+  
 
   const handleClose = () => setShowInfoModal(false);
   const handleSearch = (e) => {
@@ -71,7 +72,7 @@ export default function Search() {
       console.log("calling async api");
 
 
-      const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
+      const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
@@ -106,7 +107,7 @@ export default function Search() {
     try {
       console.log("calling async api");
 
-      const postUrl = `${process.env.REACT_APP_BE_LOCAL}/movies`;
+      const postUrl = `${process.env.REACT_APP_BE_PROD}/movies`;
       console.log(postUrl);
       const newFavouritesData = await axios.post(postUrl, favData);
 
