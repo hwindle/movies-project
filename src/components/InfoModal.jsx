@@ -1,5 +1,5 @@
 import Modal from "react-bootstrap/Modal";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./InfoModal.css";
 
 function InfoModal(props) {
