@@ -1,9 +1,9 @@
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import Modal from "react-bootstrap/Modal";
+import React from "react";
+import "./InfoModal.css";
 
 function InfoModal(props) {
+
   const [show, setShow] = useState(true);
   const [movieInfo, setMovieInfo] = useState([]);
   const [refreshModal, setRefresh] = useState(true);
@@ -54,45 +54,50 @@ function InfoModal(props) {
         Math.floor(parseInt(movieInfo.runtime) / 60) + ' hrs and ';
       formattedTime += (parseInt(movieInfo.runtime) % 60) + ' mins';
     } else {
-      formattedTime = movieInfo.runtime + ' mins';
+      formattedTime = props.data.runtime + " mins";
     }
 
     return (
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{movieInfo.title}</Modal.Title>
+          <Modal.Title style={{ color: "white", fontWeight: "bold" }}>
+            {props.data.title}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ color: "#afafaf", fontWeight: "bold" }}>
           <div>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Overview: </span>
-              {movieInfo.overview}
+              <span>Overview: </span>
+              {props.data.overview}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Release Date: </span>
-              {movieInfo.release_date}
+              <span style={{ fontWeight: "bold" }}>Release Date: </span>
+              {props.data.release_date}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Original Language: </span>
-              {movieInfo.original_language}
+              <span style={{ fontWeight: "bold" }}>Original Language: </span>
+              {props.data.original_language}
             </p>
             <p>
+
               <span style={{ fontWeight: 'bold' }}>Imdb ID: </span>IMDB id:
               {movieInfo.imdb_id}
+
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Budget: </span>$
-              {movieInfo.budget}
+              <span style={{ fontWeight: "bold" }}>Budget: </span>$
+              {props.data.budget}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Revenue: </span>$
-              {movieInfo.revenue}
+              <span style={{ fontWeight: "bold" }}>Revenue: </span>$
+              {props.data.revenue}
             </p>
             <p>
-              <span style={{ fontWeight: 'bold' }}>Run time: </span>
+              <span style={{ fontWeight: "bold" }}>Run time: </span>
               {formattedTime}
             </p>
             <p>
+
               <span style={{ fontWeight: 'bold' }}>Popularity: </span>
               Popularity:
               {movieInfo.popularity}
@@ -106,6 +111,7 @@ function InfoModal(props) {
               <span style={{ fontWeight: 'bold' }}>Vote Average: </span>Vote
               avg:
               {movieInfo.vote_average}
+
             </p>
           </div>
         </Modal.Body>

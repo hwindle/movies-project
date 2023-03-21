@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { Star } from 'react-bootstrap-icons';
 //import UserContext from '../App';
 
+
 function Home() {
   const [movieData, setMovieData] = useState([]);
   const [showEmpty, setShowEmpty] = useState(false);
@@ -41,19 +42,23 @@ function Home() {
 
     const movieId = movieData[i].id;
     console.log(movieData[i].id);
+
     let movieInfoData;
 
     // get data from id
 
     try {
-      console.log('calling async api');
+
+      console.log("calling async api");
+
 
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
       setShowInfoModal(true);
-      console.log(movieInfoData);
+      console.log(infoModalData);
+      console.log(showInfoModal);
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
@@ -62,10 +67,12 @@ function Home() {
     }
   };
 
+
   const favHandler = async (i) => {
     // let i = e.target.attributes.getNamedItem('idx').value;
 
     const { id, title, poster_path, overview, release_date } = movieData[i];
+
     const favData = {
       id: id,
       title: title,
@@ -139,7 +146,14 @@ function Home() {
               </Col>
             ))}
         </Row>
-        {showInfoModal && <InfoModal data={infoModalData} show={true} />}
+
+
+        <InfoModal
+          data={infoModalData}
+          show={showInfoModal}
+          handleClose={handleClose}
+        />
+
       </Container>
     </>
   );
