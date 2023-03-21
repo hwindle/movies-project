@@ -3,12 +3,56 @@ import React from "react";
 import "./InfoModal.css";
 
 function InfoModal(props) {
-  if (props.show) {
+
+  const [show, setShow] = useState(true);
+  const [movieInfo, setMovieInfo] = useState([]);
+  const [refreshModal, setRefresh] = useState(true);
+  const [validData, setValidData] = useState(false);
+
+  // useEffect for getting products
+
+  useEffect(() => {
+    //console.log('inside the useEffect');
+    setShow(props.show);
+
+    async function getInfo() {
+      try {
+        console.log('calling async api');
+
+        // const movieUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${props.movieid}`;
+        // const newData = await axios.get(movieUrl);
+
+        // console.log(' here is the data   ', newData);
+
+        setRefresh(true);
+        setMovieInfo(props.data);
+        console.log('in modal ', movieInfo);
+        setValidData(true);
+        // response.status(200).send(digiData);
+      } catch (error) {
+        console.log(error);
+        console.log('error in acquiring movie info');
+
+        //response.status(500).send("error in request for images");
+      }
+      //setCallApi(false);
+    }
+
+    if (refreshModal) {
+      getInfo();
+    }
+  }, [props.movieid, refreshModal, props.show, movieInfo, props.data]);
+
+  // handler for close button icon in header
+
+  const handleClose = () => setShow(false);
+
+  if (validData) {
     let formattedTime = 0;
-    if (parseInt(props.data.runtime) > 60) {
+    if (parseInt(movieInfo.runtime) > 60) {
       formattedTime =
-        Math.floor(parseInt(props.data.runtime) / 60) + " hrs and ";
-      formattedTime += (parseInt(props.data.runtime) % 60) + " mins";
+        Math.floor(parseInt(movieInfo.runtime) / 60) + ' hrs and ';
+      formattedTime += (parseInt(movieInfo.runtime) % 60) + ' mins';
     } else {
       formattedTime = props.data.runtime + " mins";
     }
@@ -35,8 +79,10 @@ function InfoModal(props) {
               {props.data.original_language}
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}>Imdb ID: </span>
-              {props.data.imdb_id}
+
+              <span style={{ fontWeight: 'bold' }}>Imdb ID: </span>IMDB id:
+              {movieInfo.imdb_id}
+
             </p>
             <p>
               <span style={{ fontWeight: "bold" }}>Budget: </span>$
@@ -51,17 +97,21 @@ function InfoModal(props) {
               {formattedTime}
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}>Popularity: </span>
 
-              {props.data.popularity}
+              <span style={{ fontWeight: 'bold' }}>Popularity: </span>
+              Popularity:
+              {movieInfo.popularity}
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}>Vote Count: </span>
-              {props.data.vote_count}
+              <span style={{ fontWeight: 'bold' }}>Vote Count: </span>Vote
+              count:
+              {movieInfo.vote_count}
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}>Vote Average: </span>
-              {props.data.vote_average}
+              <span style={{ fontWeight: 'bold' }}>Vote Average: </span>Vote
+              avg:
+              {movieInfo.vote_average}
+
             </p>
           </div>
         </Modal.Body>

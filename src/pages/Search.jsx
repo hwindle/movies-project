@@ -39,15 +39,37 @@ export default function Search() {
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const infoHandler = async (idx) => {
-    console.log(idx);
-    const movieId = movieData[idx].id;
+
+  const mainHandler = (iconFunction, index) => {
+    switch (iconFunction) {
+      case 'info':
+        infoHandler(index);
+        break;
+      case 'favourite':
+        favHandler(index);
+        break;
+      case 'delete': //delHandler(index);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const infoHandler = async (i) => {
+    console.log('Hey we are in the movie info handler');
+    //  let i = e.target.attributes.getNamedItem("idx").value;
+    console.log(i, '  index value');
+
+    const movieId = movieData[i].id;
+
     let movieInfoData;
 
     // get data from id
 
     try {
+
       console.log("calling async api");
+
 
       const getUrl = `${process.env.REACT_APP_BE_LOCAL}/moviedetails?id=${movieId}`;
       console.log(getUrl);
@@ -58,15 +80,21 @@ export default function Search() {
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
-      console.log("error in acquiring movie data by id");
-      alert("Error in acquiring movie information");
+      console.log('error in acquiring movie data by id');
+      alert('Error in acquiring movie information');
     }
   };
 
   // add to favourites handler
 
-  const favHandler = async (idx) => {
-    const { id, title, poster_path, overview, release_date } = movieData[idx];
+
+  const favHandler = async (i) => {
+    console.log('Hey we are in the add to favourites handler');
+    //  let i = e.target.attributes.getNamedItem('idx').value;
+    console.log(i, '  index value');
+
+    const { id, title, poster_path, overview, release_date } = movieData[i];
+
     const favData = {
       id: id,
       title: title,
@@ -118,20 +146,24 @@ export default function Search() {
               <Col key={item.id}>
                 <MovieCard
                   movie={item}
-                  infohandler={infoHandler}
-                  favhandler={favHandler}
+                  handler={mainHandler}
+                  //favhandler={favHandler}
                   idx={index}
-                  buttonvariant={"1"}
+
+                  buttonvariant={'1'}
+
                 />
               </Col>
             ))}
           </Row>
         </div>
+
         <InfoModal
           data={infoModalData}
           show={showInfoModal}
           handleClose={handleClose}
         />
+
       </Container>
     </>
   );

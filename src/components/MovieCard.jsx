@@ -22,60 +22,60 @@ function MovieCard(props) {
         <Card.Text>{overview}</Card.Text>
         <Stack direction="horizontal" gap={3} style={{ margin: "5px" }}>
           <div>
-            {props.buttonvariant !== "0" && (
-              <button
-                style={{ marginRight: "3px", border: "0px" }}
-                onClick={() => {
-                  props.infohandler(props.idx);
-                }}
-                //idx={props.idx}
-                data-tooltip-id="viewTip"
-                data-tooltip-content="Movie Info"
-              >
+
+            {props.buttonvariant !== '0' && (
+              <>
+
                 <InfoSquare
+                  data-tooltip-id="infoTip"
+                  data-tooltip-content="Movie Info"
                   color="gray"
                   size={32}
-                  // idx={props.idx}
+
+                  onClick={() => {
+                    props.handler('info', props.idx);
+                  }}
+                  idx={props.idx}
+
                 />
-                <Tooltip id="viewTip" />
-              </button>
+                <Tooltip id="infoTip" />
+              </>
             )}
           </div>
-          <div style={{ marginLeft: "auto" }}>
-            {props.buttonvariant === "1" && (
-              <button
-                style={{ marginRight: "3px", border: "0px" }}
-                onClick={() => {
-                  props.favhandler(props.idx);
-                }}
-                // idx={props.idx}
-                data-tooltip-id="favTip"
-                data-tooltip-content="Add to Favourites"
-              >
+
+          <div style={{ marginLeft: 'auto' }}>
+            {props.buttonvariant === '1' && (
+              <>
                 <Star
-                  // idx={props.idx}
+                  data-tooltip-id="favTip"
+                  data-tooltip-content="Add to Favourites"
+
                   color="gray"
                   size={32}
+                  onClick={() => {
+                    props.handler('favourite', props.idx);
+                  }}
+                  idx={props.idx}
                 />
                 <Tooltip id="favTip" />
-              </button>
+              </>
             )}
-            {props.buttonvariant === "2" && (
-              <button
-                style={{ marginRight: "3px", border: "0px" }}
-                onClick={() => props.delhandler(props.idx)}
-                // idx={props.idx}
-                data-tooltip-id="delTip"
-                data-tooltip-content="Delete Movie"
-              >
+
+            {props.buttonvariant === '2' && (
+              <>
                 <Trash3
-                  //onClick={props.delhandler}
-                  // idx={props.idx}
+                  data-tooltip-id="delTip"
+                  data-tooltip-content="Delete Movie"
+
                   color="gray"
                   size={32}
+                  onClick={() => {
+                    props.handler('delete', props.idx);
+                  }}
+                  idx={props.idx}
                 />
                 <Tooltip id="delTip" />
-              </button>
+              </>
             )}
           </div>
         </Stack>
