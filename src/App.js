@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
-import { createContext, useState } from 'react';
+//import { createContext, useState } from 'react';
 
 function App() {
   // const [showStar, setStarVisible] = useState({});
