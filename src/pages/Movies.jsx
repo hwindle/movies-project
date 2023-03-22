@@ -12,7 +12,9 @@ export default function Movies() {
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
+
   const handleClose = () => setShowInfoModal(false);
+
 
   const mainHandler = (iconFunction, index) => {
     switch (iconFunction) {
