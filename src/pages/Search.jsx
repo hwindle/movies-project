@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import NavBar from "../components/Navbar";
-import SearchBar from "../components/SearchBar";
-import MovieCard from "../components/MovieCard";
+import React, { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import NavBar from '../components/Navbar';
+import SearchBar from '../components/SearchBar';
+import MovieCard from '../components/MovieCard';
 // api stuff
-import { filmByTitleActor } from "../MovieAPI/MovieAPI";
-import axios from "axios";
-import InfoModal from "../components/InfoModal";
+import { filmByTitleActor } from '../MovieAPI/MovieAPI';
+import axios from 'axios';
+import InfoModal from '../components/InfoModal';
 
 export default function Search() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchSubmitStatus, setSearchSubmitStatus] = useState(false);
   // state for the movies results
   const [movieData, setMovieData] = useState([]);
-  
 
   const handleClose = () => setShowInfoModal(false);
+
+  //const handleClose = () => setShowInfoModal(false);
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchSubmitStatus(true);
@@ -23,7 +24,7 @@ export default function Search() {
     // actually search for movies, passing in prop here
     searchMovies(searchTerm);
     //console.log(searchTerm);
-    setSearchTerm("");
+    setSearchTerm('');
     // once the movie state is set
     setSearchSubmitStatus(false);
   };
@@ -39,7 +40,6 @@ export default function Search() {
   // state for info modal
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
-
 
   const mainHandler = (iconFunction, index) => {
     switch (iconFunction) {
@@ -68,9 +68,7 @@ export default function Search() {
     // get data from id
 
     try {
-
-      console.log("calling async api");
-
+      console.log('calling async api');
 
       const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       console.log(getUrl);
@@ -88,7 +86,6 @@ export default function Search() {
 
   // add to favourites handler
 
-
   const favHandler = async (i) => {
     console.log('Hey we are in the add to favourites handler');
     //  let i = e.target.attributes.getNamedItem('idx').value;
@@ -105,7 +102,7 @@ export default function Search() {
     };
 
     try {
-      console.log("calling async api");
+      console.log('calling async api');
 
       const postUrl = `${process.env.REACT_APP_BE_PROD}/movies`;
       console.log(postUrl);
@@ -117,14 +114,14 @@ export default function Search() {
       console.log(newFavouritesData);
     } catch (error) {
       console.log(error);
-      console.log("error in adding to favourites list");
-      alert("Error in adding to favourites collection");
+      console.log('error in adding to favourites list');
+      alert('Error in adding to favourites collection');
     }
   };
 
   // search the API for films
   const searchMovies = async (searchTerm) => {
-    const cleanedSearchTerm = searchTerm.replace(/\s{1,}/g, "+");
+    const cleanedSearchTerm = searchTerm.replace(/\s{1,}/g, '+');
     const results = await filmByTitleActor(cleanedSearchTerm.trim());
     setMovieData(results.results);
     //console.dir(results);
@@ -135,14 +132,14 @@ export default function Search() {
     <>
       <NavBar />
 
-      <Container className="mt-4" fluid>
-        <div className="wrapper mt-4">
+      <Container className='mt-4' fluid>
+        <div className='wrapper mt-4'>
           <SearchBar
             handleSearch={handleSearch}
             onChangeHandler={onChangeHandler}
             value={searchTerm}
           />
-          <Row md={2} xs={1} lg={3} xl={4} className="g-4 mt-3">
+          <Row md={2} xs={1} lg={3} xl={4} className='g-4 mt-3'>
             {movieData?.map((item, index) => (
               <Col key={item.id}>
                 <MovieCard
@@ -150,9 +147,7 @@ export default function Search() {
                   handler={mainHandler}
                   //favhandler={favHandler}
                   idx={index}
-
                   buttonvariant={'1'}
-
                 />
               </Col>
             ))}
@@ -164,7 +159,6 @@ export default function Search() {
           show={showInfoModal}
           handleClose={handleClose}
         />
-
       </Container>
     </>
   );

@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import { useState } from 'react';
 import { FavouriteContext } from './FavouriteContexts/FavouriteContext';
 
+
 function App() {
   // These two variables belong with the favourites context
   const [showStar, setShowStar] = useState(false);

@@ -12,9 +12,8 @@ function Home() {
   const [movieData, setMovieData] = useState([]);
   const [showEmpty, setShowEmpty] = useState(false);
   const [showItems, setShowItems] = useState(false);
-  const [modalClose, setModalClose] = useState(true);
 
-  const handleClose = () => (setModalClose(true));
+  const handleClose = () => setShowInfoModal(false);
 
   // state for info modal
   const [infoModalData, setInfoModalData] = useState([]);
@@ -50,9 +49,7 @@ function Home() {
     // get data from id
 
     try {
-
-      console.log("calling async api");
-
+      console.log('calling async api');
 
       const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       console.log(getUrl);
@@ -69,9 +66,9 @@ function Home() {
     }
   };
 
-  // testing the context
+
   const { show, numberAdded } = useContext(FavouriteContext);
-  // context could be used in here
+  // context should be used in here
   const favHandler = async (i) => {
     // let i = e.target.attributes.getNamedItem('idx').value;
 
@@ -122,13 +119,14 @@ function Home() {
     }
   }, []);
 
+  console.log(modalClose);
   console.log(infoModalData);
 
   return (
     <>
       <NavBar />
-      <Container className="mt-4" fluid>
-        <Row md={2} xs={1} lg={3} xl={4} className="g-4">
+      <Container className='mt-4' fluid>
+        <Row md={2} xs={1} lg={3} xl={4} className='g-4'>
           {showEmpty && <p>Your List is Empty ¯\_(ツ)_/¯</p>}
           {/* {updateVisibilty.showStar && (
             <div style={{ position: 'static', top: '0', left: '0' }}>
@@ -138,7 +136,7 @@ function Home() {
                 color="gray"
                 size={32}
               />
-             <Tooltip id="favTip" /> 
+            <Tooltip id="favTip" /> 
             </div>
           )} */}
           {showItems &&
@@ -146,7 +144,7 @@ function Home() {
               <Col key={index}>
                 <MovieCard
                   movie={item}
-                  buttonvariant="1"
+                  buttonvariant='1'
                   handler={mainHandler}
                   //favhandler={favHandler}
                   //infohandler={infoHandler}
@@ -156,13 +154,11 @@ function Home() {
             ))}
         </Row>
 
-
         <InfoModal
           data={infoModalData}
           show={showInfoModal}
           handleClose={handleClose}
         />
-
       </Container>
     </>
   );
