@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
 import NavBar from '../components/Navbar';
 import InfoModal from '../components/InfoModal';
-// import { useContext } from 'react';
-// import { Star } from 'react-bootstrap-icons';
-//import UserContext from '../App';
+import { Star } from 'react-bootstrap-icons';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
+
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
@@ -66,8 +66,16 @@ function Home() {
     }
   };
 
+
+  const { show, numberAdded } = useContext(FavouriteContext);
+  // context should be used in here
   const favHandler = async (i) => {
     // let i = e.target.attributes.getNamedItem('idx').value;
+
+    console.dir('show: ', show);
+    console.dir('number of favs: ', numberAdded);
+    show.setShowStar(true);
+    console.log('use context test: ', show.showStar);
 
     const { id, title, poster_path, overview, release_date } = movieData[i];
 
