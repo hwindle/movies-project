@@ -4,23 +4,26 @@ import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
-import { createContext, useState } from 'react';
+import { useState } from 'react';
+import { FavouriteContext } from './FavouriteContexts/FavouriteContext';
 
 function App() {
-  // const [showStar, setStarVisible] = useState({});
-  // const UserContext = createContext({
-  //   showStar: showStar,
-  //   setStarVisible: setStarVisible,
-  // });
-  // exports.UserContext = UserContext;
+  // These two variables belong with the favourites context
+  const [showStar, setShowStar] = useState(false);
+  const [numFavourites, setNumFavourites] = useState(0);
+  // favourites context values object
+  const favContextValues = {
+    show: {showStar, setShowStar},
+    numberAdded: {numFavourites, setNumFavourites}
+  };
 
   return (
     // TODO: Implement code splitting
 
     <>
-      {/* <UserContext.Provider
-        value={{ showStar: showStar, setStarVisible: setStarVisible }}
-      > */}
+      <FavouriteContext.Provider
+        value={favContextValues}
+      >
       <Routes>
         {/* Landing page */}
         <Route path="/" element={<Home />} />
@@ -30,7 +33,7 @@ function App() {
         {/* <Route path='/:movieid' element={<ShowInfo />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {/* </UserContext.Provider> */}
+      </FavouriteContext.Provider>
     </>
   );
 }
