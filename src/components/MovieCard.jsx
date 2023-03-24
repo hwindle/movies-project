@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import { Tooltip } from "react-tooltip";
-import { Star, InfoSquare, Trash3 } from "react-bootstrap-icons";
+import { StarFill, InfoSquare, Trash3 } from "react-bootstrap-icons";
 
 function MovieCard(props) {
   const movie = props.movie;
@@ -31,7 +31,7 @@ function MovieCard(props) {
                   data-tooltip-content="Movie Info"
                   color="gray"
                   size={32}
-
+                  className='svg-info-square'
                   onClick={() => {
                     props.handler('info', props.idx);
                   }}
@@ -46,10 +46,10 @@ function MovieCard(props) {
           <div style={{ marginLeft: 'auto' }}>
             {props.buttonvariant === '1' && (
               <>
-                <Star
+                <StarFill
                   data-tooltip-id="favTip"
                   data-tooltip-content="Add to Favourites"
-
+                  className='svg-star'
                   color="gray"
                   size={32}
                   onClick={() => {
@@ -66,7 +66,7 @@ function MovieCard(props) {
                 <Trash3
                   data-tooltip-id="delTip"
                   data-tooltip-content="Delete Movie"
-
+                  className='svg-trash'
                   color="gray"
                   size={32}
                   onClick={() => {

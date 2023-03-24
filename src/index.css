@@ -81,9 +81,30 @@ div.card:hover {
   color: black;
 }
 
-
-
 .search-box {
   background: #1e1e1e !important;
   color: white !important;
+}
+
+/*** SVG Info/Fav button animations ***/
+.svg-info-square {
+  transition: fill ease-in 370ms;
+}
+
+.svg-info-square:hover,
+.svg-info-square:active {
+  fill: #00ce79;
+}
+
+.svg-star {
+  fill: transparent;
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-linecap: round;
+  transition: all ease-in 380ms;
+}
+
+.svg-star:hover,
+.svg-star:active {
+  fill: #00ce79;
+  stroke: #00ce79;
 }
