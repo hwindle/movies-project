@@ -11,6 +11,8 @@ function App() {
   const { isAuthenticated, user } = useAuth0();
   // These two variables belong with the favourites context
   const [showStar, setShowStar] = useState(false);
+  const [idArray, setIdArray] = useState([]);
+
   let fcount = 0;
   if (window.localStorage.getItem('favCounter')) {
     fcount = window.localStorage.getItem('favCounter');
@@ -22,6 +24,7 @@ function App() {
   const favContextValues = {
     show: { showStar, setShowStar },
     numberAdded: { numFavourites, setNumFavourites },
+    movieCheck: { idArray, setIdArray },
   };
 
   return (
