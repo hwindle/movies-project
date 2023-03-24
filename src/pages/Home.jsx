@@ -4,9 +4,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
 import NavBar from '../components/Navbar';
 import InfoModal from '../components/InfoModal';
-import { Star } from 'react-bootstrap-icons';
+
 import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
-import FavCounter from '../components/FavCounter';
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
@@ -66,23 +65,30 @@ function Home() {
     }
   };
 
-  const { show, numberAdded } = useContext(FavouriteContext);
+  const { show, numberAdded, movieCheck } = useContext(FavouriteContext);
   // context should be used in here
   const favHandler = async (i) => {
     // let i = e.target.attributes.getNamedItem('idx').value;
 
     //console.dir('show: ', show);
     console.log(numberAdded.numFavourites);
+    console.log(movieCheck.idArray);
     // numberAdded.setNumFavourites(20);
 
     console.log('number of favs: ', numberAdded.numFavourites);
-    numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
-    window.localStorage.setItem(
-      'favCounter',
-      String(numberAdded.numFavourites + 1)
-    );
-    show.setShowStar(true);
-    // console.log('use context test: ', show.showStar);
+    if (!movieCheck.idArray.includes(movieData[i].id)) {
+      numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+      window.localStorage.setItem(
+        'favCounter',
+        String(numberAdded.numFavourites + 1)
+      );
+      show.setShowStar(true);
+      const tempArray = movieCheck.idArray;
+      tempArray.push(movieData[i].id);
+      console.log(tempArray);
+      movieCheck.setIdArray(tempArray);
+      // console.log('use context test: ', show.showStar);
+    }
 
     const { id, title, poster_path, overview, release_date } = movieData[i];
 
