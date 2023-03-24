@@ -7,6 +7,8 @@ import MovieCard from '../components/MovieCard';
 import { filmByTitleActor } from '../MovieAPI/MovieAPI';
 import axios from 'axios';
 import InfoModal from '../components/InfoModal';
+import { useContext } from 'react';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -86,11 +88,26 @@ export default function Search() {
 
   // add to favourites handler
 
+  const { show, numberAdded } = useContext(FavouriteContext);
+
   const favHandler = async (i) => {
     console.log('Hey we are in the add to favourites handler');
     //  let i = e.target.attributes.getNamedItem('idx').value;
     console.log(i, '  index value');
 
+    //console.dir('show: ', show);
+    console.log(numberAdded.numFavourites);
+    // numberAdded.setNumFavourites(20);
+
+    console.log('number of favs: ', numberAdded.numFavourites);
+    numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+    window.localStorage.setItem(
+      'favCounter',
+      String(numberAdded.numFavourites + 1)
+    );
+    show.setShowStar(true);
+
+    // console.log('use context test: ', show.showStar);
     const { id, title, poster_path, overview, release_date } = movieData[i];
 
     const favData = {
@@ -132,14 +149,14 @@ export default function Search() {
     <>
       <NavBar />
 
-      <Container className='mt-4' fluid>
-        <div className='wrapper mt-4'>
+      <Container className="mt-4" fluid>
+        <div className="wrapper mt-4">
           <SearchBar
             handleSearch={handleSearch}
             onChangeHandler={onChangeHandler}
             value={searchTerm}
           />
-          <Row md={2} xs={1} lg={3} xl={4} className='g-4 mt-3'>
+          <Row md={2} xs={1} lg={3} xl={4} className="g-4 mt-3">
             {movieData?.map((item, index) => (
               <Col key={item.id}>
                 <MovieCard
