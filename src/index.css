@@ -108,3 +108,12 @@ div.card:hover {
   fill: #00ce79;
   stroke: #00ce79;
 }
+
+.svg-trash {
+  transition: fill ease-in 350ms;
+}
+
+.svg-trash:hover,
+.svg-trash:active {
+  fill: #BC0000;
+}
