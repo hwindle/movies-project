@@ -4,9 +4,11 @@ import NavBar from "../components/MovieNavbar";
 import SearchBar from "../components/SearchBar";
 import MovieCard from "../components/MovieCard";
 // api stuff
-import { filmByTitleActor } from "../MovieAPI/MovieAPI";
-import axios from "axios";
-import InfoModal from "../components/InfoModal";
+import { filmByTitleActor } from '../MovieAPI/MovieAPI';
+import axios from 'axios';
+import InfoModal from '../components/InfoModal';
+import { useContext } from 'react';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -88,11 +90,40 @@ export default function Search() {
 
   // add to favourites handler
 
+  const { show, numberAdded, movieCheck } = useContext(FavouriteContext);
+
   const favHandler = async (i) => {
     console.log("Hey we are in the add to favourites handler");
     //  let i = e.target.attributes.getNamedItem('idx').value;
     console.log(i, "  index value");
 
+    //console.dir('show: ', show);
+    console.log(numberAdded.numFavourites);
+    // numberAdded.setNumFavourites(20);
+
+    if (!movieCheck.idArray.includes(movieData[i].id)) {
+      numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+      window.localStorage.setItem(
+        'favCounter',
+        String(numberAdded.numFavourites + 1)
+      );
+      show.setShowStar(true);
+      const tempArray = movieCheck.idArray;
+      tempArray.push(movieData[i].id);
+      console.log(tempArray);
+      movieCheck.setIdArray(tempArray);
+      // console.log('use context test: ', show.showStar);
+    }
+
+    // console.log('number of favs: ', numberAdded.numFavourites);
+    // numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+    // window.localStorage.setItem(
+    //   'favCounter',
+    //   String(numberAdded.numFavourites + 1)
+    // );
+    // show.setShowStar(true);
+
+    // console.log('use context test: ', show.showStar);
     const { id, title, poster_path, overview, release_date } = movieData[i];
 
     const favData = {

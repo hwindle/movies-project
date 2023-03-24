@@ -5,6 +5,9 @@ import NavBar from "../components/MovieNavbar";
 import { favouriteFilms } from "../MovieAPI/MovieAPI";
 import InfoModal from "../components/InfoModal";
 import axios from "axios";
+import { useContext } from 'react';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
+
 
 export default function Movies() {
   // handlers for movie card icons/buttons
@@ -17,12 +20,12 @@ export default function Movies() {
 
   const mainHandler = (iconFunction, index) => {
     switch (iconFunction) {
-      case "info":
+      case 'info':
         infoHandler(index);
         break;
-      case "favourite": //favHandler(index);
+      case 'favourite': //favHandler(index);
         break;
-      case "delete":
+      case 'delete':
         delHandler(index);
         break;
       default:
@@ -31,7 +34,7 @@ export default function Movies() {
   };
 
   const infoHandler = async (i) => {
-    console.log("Hey we are in the movie info handler");
+    console.log('Hey we are in the movie info handler');
     //let i = e.target.attributes.getNamedItem('idx').value;
     //console.log(i, '  index value');
 
@@ -42,7 +45,7 @@ export default function Movies() {
     // get data from id
 
     try {
-      console.log("calling async api");
+      console.log('calling async api');
 
       const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       const url = `${process.env.REACT_APP_BE_PROD}/moviecast?id=${movieId}`;
@@ -56,23 +59,23 @@ export default function Movies() {
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
-      console.log("error in acquiring movie data by id");
-      alert("Error in acquiring movie information");
+      console.log('error in acquiring movie data by id');
+      alert('Error in acquiring movie information');
     }
   };
 
   // delete handler function
 
   const delHandler = async (i) => {
-    console.log("hey we are in the delete handler");
+    console.log('hey we are in the delete handler');
 
     //let i = e.target.attributes.getNamedItem('idx').value;
-    console.log(i, "  index value");
+    console.log(i, '  index value');
 
-    if (window.confirm("Do you want to delete movie?")) {
-      console.log("in delete");
+    if (window.confirm('Do you want to delete movie?')) {
+      console.log('in delete');
       try {
-        console.log("calling async api");
+        console.log('calling async api');
         const tempObj = movieData[i];
 
         const idStr = tempObj._id;
@@ -105,11 +108,19 @@ export default function Movies() {
     getFavourites();
   }, [movieData]);
 
+  // clear favourites counter now we are in favourites
+
+  const { show, numberAdded } = useContext(FavouriteContext);
+
+  numberAdded.setNumFavourites(0);
+  show.setShowStar(false);
+  window.localStorage.setItem('favCounter', '0');
+
   return (
     <>
       {/* <NavBar /> */}
       <Container className="mt-4" fluid>
-        <h2 style={{ textAlign: "center", color: "rgba(255, 255, 255, 0.7" }}>
+        <h2 style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7' }}>
           Favourite Films
         </h2>
         <div className="wrapper mt-4">
@@ -119,7 +130,7 @@ export default function Movies() {
                 <MovieCard
                   movie={item}
                   handler={mainHandler}
-                  buttonvariant={"2"}
+                  buttonvariant={'2'}
                   idx={index}
                   key={item.apiId}
                 />
