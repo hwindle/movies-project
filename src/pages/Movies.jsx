@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import MovieCard from '../components/MovieCard';
-import NavBar from '../components/Navbar';
-import { favouriteFilms } from '../MovieAPI/MovieAPI';
-import InfoModal from '../components/InfoModal';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import MovieCard from "../components/MovieCard";
+import NavBar from "../components/MovieNavbar";
+import { favouriteFilms } from "../MovieAPI/MovieAPI";
+import InfoModal from "../components/InfoModal";
+import axios from "axios";
 import { useContext } from 'react';
 import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
+
 
 export default function Movies() {
   // handlers for movie card icons/buttons
   // state for info modal
   const [infoModalData, setInfoModalData] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [movieCast, setMovieCast] = useState([]);
 
   const handleClose = () => setShowInfoModal(false);
 
@@ -46,9 +48,11 @@ export default function Movies() {
       console.log('calling async api');
 
       const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
-      console.log(getUrl);
+      const url = `${process.env.REACT_APP_BE_PROD}/moviecast?id=${movieId}`;
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
+      const { data } = await axios.get(url);
+      setMovieCast(data.cast);
       setShowInfoModal(true);
       //setModalClose(false);
       console.log(movieInfoData);
@@ -114,7 +118,7 @@ export default function Movies() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Container className="mt-4" fluid>
         <h2 style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7' }}>
           Favourite Films
@@ -139,6 +143,7 @@ export default function Movies() {
           data={infoModalData}
           show={showInfoModal}
           handleClose={handleClose}
+          movieCast={movieCast}
         />
       </Container>
     </>
