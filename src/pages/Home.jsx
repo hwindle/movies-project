@@ -1,11 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import MovieCard from "../components/MovieCard";
-import NavBar from "../components/Navbar";
-import InfoModal from "../components/InfoModal";
-import { Star } from "react-bootstrap-icons";
-import { FavouriteContext } from "../FavouriteContexts/FavouriteContext";
+import axios from 'axios';
+import React, { useEffect, useState, useContext } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import MovieCard from '../components/MovieCard';
+import NavBar from '../components/Navbar';
+import InfoModal from '../components/InfoModal';
+import { Star } from 'react-bootstrap-icons';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
+import FavCounter from '../components/FavCounter';
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
@@ -22,13 +23,13 @@ function Home() {
 
   const mainHandler = (iconFunction, index) => {
     switch (iconFunction) {
-      case "info":
+      case 'info':
         infoHandler(index);
         break;
-      case "favourite":
+      case 'favourite':
         favHandler(index);
         break;
-      case "delete": //delHandler(index);
+      case 'delete': //delHandler(index);
         break;
       default:
         break;
@@ -36,9 +37,9 @@ function Home() {
   };
 
   const infoHandler = async (i) => {
-    console.log("Hey we are in the movie info handler");
+    console.log('Hey we are in the movie info handler');
     //let i = e.target.attributes.getNamedItem('idx').value;
-    console.log(i, "  index value");
+    console.log(i, '  index value');
 
     const movieId = movieData[i].id;
     console.log(movieData[i].id);
@@ -48,7 +49,7 @@ function Home() {
     // get data from id
 
     try {
-      console.log("calling async api");
+      console.log('calling async api');
 
       const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
       console.log(getUrl);
@@ -60,8 +61,8 @@ function Home() {
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
-      console.log("error in acquiring movie data by id");
-      alert("Error in acquiring movie information");
+      console.log('error in acquiring movie data by id');
+      alert('Error in acquiring movie information');
     }
   };
 
@@ -70,10 +71,18 @@ function Home() {
   const favHandler = async (i) => {
     // let i = e.target.attributes.getNamedItem('idx').value;
 
-    console.dir("show: ", show);
-    console.dir("number of favs: ", numberAdded);
+    //console.dir('show: ', show);
+    console.log(numberAdded.numFavourites);
+    // numberAdded.setNumFavourites(20);
+
+    console.log('number of favs: ', numberAdded.numFavourites);
+    numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+    window.localStorage.setItem(
+      'favCounter',
+      String(numberAdded.numFavourites + 1)
+    );
     show.setShowStar(true);
-    console.log("use context test: ", show.showStar);
+    // console.log('use context test: ', show.showStar);
 
     const { id, title, poster_path, overview, release_date } = movieData[i];
 
@@ -90,7 +99,7 @@ function Home() {
       await axios.post(postUrl, favData);
     } catch (error) {
       console.log(error);
-      alert("Error in adding to favourites collection");
+      alert('Error in adding to favourites collection');
     }
   };
 
