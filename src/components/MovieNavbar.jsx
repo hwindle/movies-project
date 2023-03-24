@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useLocation } from "react-router-dom";
 import Logout from "../auth/Logout";
 
-function NavBar() {
+function MovieNavBar() {
   const { isAuthenticated } = useAuth0();
   const params = useLocation();
   const currentPath = params.pathname;
@@ -58,4 +58,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default MovieNavBar;

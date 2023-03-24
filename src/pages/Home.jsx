@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../components/MovieCard";
-import NavBar from "../components/Navbar";
+import NavBar from "../components/MovieNavbar";
 import InfoModal from "../components/InfoModal";
 import { Star } from "react-bootstrap-icons";
 import { FavouriteContext } from "../FavouriteContexts/FavouriteContext";
@@ -11,6 +11,7 @@ function Home() {
   const [movieData, setMovieData] = useState([]);
   const [showEmpty, setShowEmpty] = useState(false);
   const [showItems, setShowItems] = useState(false);
+  const [movieCast, setMovieCast] = useState([]);
 
   const handleClose = () => setShowInfoModal(false);
 
@@ -51,12 +52,12 @@ function Home() {
       console.log("calling async api");
 
       const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
-      console.log(getUrl);
+      const url = `${process.env.REACT_APP_BE_PROD}/moviecast?id=${movieId}`;
       movieInfoData = await axios.get(getUrl);
       setInfoModalData(movieInfoData.data);
+      const { data } = await axios.get(url);
+      setMovieCast(data.cast);
       setShowInfoModal(true);
-      console.log(infoModalData);
-      console.log(showInfoModal);
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
@@ -121,7 +122,7 @@ function Home() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Container className="mt-4" fluid>
         <Row md={2} xs={1} lg={3} xl={4} className="g-4">
           {showEmpty && <p>Your List is Empty ¯\_(ツ)_/¯</p>}
@@ -155,6 +156,7 @@ function Home() {
           data={infoModalData}
           show={showInfoModal}
           handleClose={handleClose}
+          movieCast={movieCast}
         />
       </Container>
     </>

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FavouriteContext } from "./FavouriteContexts/FavouriteContext";
 import Home from "./pages/Home";
 import { BrowserRouter as Router } from "react-router-dom";
+import MovieNavBar from "./components/MovieNavbar";
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -22,6 +23,7 @@ function App() {
     <Router>
       <UserContext.Provider value={user}>
         <FavouriteContext.Provider value={favContextValues}>
+          <MovieNavBar />
           <>
             {isAuthenticated && <MovieRouter />}
             {!isAuthenticated && <Home />}
