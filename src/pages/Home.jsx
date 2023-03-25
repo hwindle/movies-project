@@ -1,18 +1,25 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
+import {
+  getTrendingFilms,
+  addFavFilm,
+  getMovieCast,
+  getMovieDetails,
+} from '../MovieAPI/MovieAPI';
+// UI imports
 import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
-import NavBar from '../components/Navbar';
 import InfoModal from '../components/InfoModal';
-// import { useContext } from 'react';
-// import { Star } from 'react-bootstrap-icons';
-//import UserContext from '../App';
+
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
+  // are there no movies?
   const [showEmpty, setShowEmpty] = useState(false);
   const [showItems, setShowItems] = useState(false);
-
+  // state for movie actors
+  const [movieCast, setMovieCast] = useState([]);
+  // for the infoModal close button
   const handleClose = () => setShowInfoModal(false);
 
   // state for info modal
@@ -29,35 +36,23 @@ function Home() {
       case 'favourite':
         favHandler(index);
         break;
-      case 'delete': //delHandler(index);
-        break;
       default:
         break;
     }
   };
 
   const infoHandler = async (i) => {
-    console.log('Hey we are in the movie info handler');
-    //let i = e.target.attributes.getNamedItem('idx').value;
-    console.log(i, '  index value');
+    // console.log('Hey we are in the movie info handler');
 
     const movieId = movieData[i].id;
-    console.log(movieData[i].id);
-
-    let movieInfoData;
 
     // get data from id
-
     try {
-      console.log('calling async api');
-
-      const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
-      console.log(getUrl);
-      movieInfoData = await axios.get(getUrl);
-      setInfoModalData(movieInfoData.data);
+      const movieDetails = await getMovieDetails(movieId);
+      setInfoModalData(movieDetails);
+      const castInfo = await getMovieCast(movieId);
+      setMovieCast(castInfo);
       setShowInfoModal(true);
-      console.log(infoModalData);
-      console.log(showInfoModal);
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
@@ -66,25 +61,30 @@ function Home() {
     }
   };
 
+  // useContext to inform users of movies added to DB
+  const { show, numberClicked, movieCheck } = useContext(FavouriteContext);
+  // handler for adding a favourite movie to the DB.
   const favHandler = async (i) => {
-    // let i = e.target.attributes.getNamedItem('idx').value;
+    // checking whether the user has clicked on the same film
+    // twice
+    if (!movieCheck.idArray.includes(movieData[i].id)) {
+      numberClicked.setNumFavourites(numberClicked.numFavourites + 1);
+      window.localStorage.setItem(
+        'favCounter',
+        String(numberClicked.numFavourites + 1)
+      );
+      show.setShowStar(true);
+      const tempArray = movieCheck.idArray;
+      tempArray.push(movieData[i].id);
+      // console.log(tempArray);
+      movieCheck.setIdArray(tempArray);
+    }
 
-    const { id, title, poster_path, overview, release_date } = movieData[i];
-
-    const favData = {
-      id: id,
-      title: title,
-      poster_path: poster_path,
-      overview: overview,
-      release_date: release_date,
-    };
-
-    try {
-      const postUrl = `${process.env.REACT_APP_BE_PROD}/movies`;
-      await axios.post(postUrl, favData);
-    } catch (error) {
-      console.log(error);
-      alert('Error in adding to favourites collection');
+    // add film to database
+    if (addFavFilm(movieData[i])) {
+      console.log('Film added successfully');
+    } else {
+      console.error(`Error adding ${i} film`);
     }
   };
 
@@ -92,12 +92,10 @@ function Home() {
     try {
       console.log(`${process.env.REACT_APP_BE_PROD}/moviesapi`);
       const getMovies = async () => {
-        const movieData = await axios.get(
-          `${process.env.REACT_APP_BE_PROD}/moviesapi`
-        );
-        if (movieData.data.results.length > 0) {
-          console.log(movieData.data.results);
-          setMovieData(movieData.data.results);
+        const movieData = await getTrendingFilms();
+        if (movieData.results.length > 0) {
+          console.log(movieData.results);
+          setMovieData(movieData.results);
           setShowItems(true);
           setShowEmpty(false);
         } else {
@@ -111,26 +109,13 @@ function Home() {
     }
   }, []);
 
-  console.log(modalClose);
-  console.log(infoModalData);
+  // console.log(infoModalData);
 
   return (
     <>
-      <NavBar />
       <Container className='mt-4' fluid>
         <Row md={2} xs={1} lg={3} xl={4} className='g-4'>
           {showEmpty && <p>Your List is Empty ¯\_(ツ)_/¯</p>}
-          {/* {updateVisibilty.showStar && (
-            <div style={{ position: 'static', top: '0', left: '0' }}>
-              <Star
-                data-tooltip-id="favTip"
-                data-tooltip-content="Add to Favourites"
-                color="gray"
-                size={32}
-              />
-            <Tooltip id="favTip" /> 
-            </div>
-          )} */}
           {showItems &&
             movieData.map((item, index) => (
               <Col key={index}>
@@ -138,8 +123,6 @@ function Home() {
                   movie={item}
                   buttonvariant='1'
                   handler={mainHandler}
-                  //favhandler={favHandler}
-                  //infohandler={infoHandler}
                   idx={index}
                 />
               </Col>
@@ -150,6 +133,7 @@ function Home() {
           data={infoModalData}
           show={showInfoModal}
           handleClose={handleClose}
+          movieCast={movieCast}
         />
       </Container>
     </>

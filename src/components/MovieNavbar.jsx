@@ -1,9 +1,18 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+// auth imports
+import Login from '../auth/Login';
+import Profile from '../auth/Profile';
+import { useAuth0 } from '@auth0/auth0-react';
+import Logout from '../auth/Logout';
+// little star counter
+import FavCounter from './FavCounter';
+// UI
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
-import { Link, useLocation } from 'react-router-dom';
 
-function NavBar() {
+function MovieNavBar() {
+  const { isAuthenticated } = useAuth0();
   const params = useLocation();
   const currentPath = params.pathname;
   // react-router route links
@@ -25,6 +34,7 @@ function NavBar() {
             className='me-auto my-2 my-lg-0 d-flex gap-3'
             style={{ maxHeight: '100px' }}
             navbarScroll>
+            {isAuthenticated && <Navbar.Text>{<Profile />}</Navbar.Text>}
             {routeLinks.map((item, id) => (
               <Link
                 key={id}
@@ -35,14 +45,23 @@ function NavBar() {
                   alignItems: 'center',
                   fontWeight: currentPath === item.href ? 'bold' : 'medium',
                 }}>
-                {item.title}
+                {item.title === 'Home'
+                  ? item.title
+                  : isAuthenticated
+                  ? item.title
+                  : ''}
               </Link>
             ))}
+            <div style={{ marginLeft: 10 }}>
+              {isAuthenticated && <FavCounter />}
+            </div>
           </Nav>
+          {!isAuthenticated && <Nav.Link>{<Login />}</Nav.Link>}
+          {isAuthenticated && <Nav.Link>{<Logout />}</Nav.Link>}
         </Navbar>
       </Container>
     </Navbar>
   );
 }
 
-export default NavBar;
+export default MovieNavBar;

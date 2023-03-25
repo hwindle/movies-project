@@ -1,29 +1,36 @@
-import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import NavBar from '../components/Navbar';
+import React, { useState, useContext } from 'react';
+import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
+// Components
 import SearchBar from '../components/SearchBar';
 import MovieCard from '../components/MovieCard';
-// api stuff
-import { filmByTitleActor } from '../MovieAPI/MovieAPI';
-import axios from 'axios';
 import InfoModal from '../components/InfoModal';
+// api stuff
+import {
+  filmByTitleActor,
+  getMovieDetails,
+  getMovieCast,
+  addFavFilm,
+} from '../MovieAPI/MovieAPI';
+// UI
+import { Col, Container, Row } from 'react-bootstrap';
 
-export default function Search() {
+function Search() {
+  // state for search bar
   const [searchTerm, setSearchTerm] = useState('');
   const [searchSubmitStatus, setSearchSubmitStatus] = useState(false);
+  // stop warning error
+  console.log(searchSubmitStatus);
   // state for the movies results
   const [movieData, setMovieData] = useState([]);
-
+  const [movieCast, setMovieCast] = useState([]);
+  // for the info modal
   const handleClose = () => setShowInfoModal(false);
 
-  //const handleClose = () => setShowInfoModal(false);
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchSubmitStatus(true);
     setSearchTerm(e.target.value);
-    // actually search for movies, passing in prop here
     searchMovies(searchTerm);
-    //console.log(searchTerm);
     setSearchTerm('');
     // once the movie state is set
     setSearchSubmitStatus(false);
@@ -32,9 +39,6 @@ export default function Search() {
   const onChangeHandler = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
-    if (searchSubmitStatus) {
-      console.log(searchTerm);
-    }
   };
 
   // state for info modal
@@ -49,33 +53,24 @@ export default function Search() {
       case 'favourite':
         favHandler(index);
         break;
-      case 'delete': //delHandler(index);
-        break;
+
       default:
         break;
     }
   };
 
   const infoHandler = async (i) => {
-    console.log('Hey we are in the movie info handler');
-    //  let i = e.target.attributes.getNamedItem("idx").value;
-    console.log(i, '  index value');
+    // console.log('Hey we are in the movie info handler');
 
     const movieId = movieData[i].id;
 
-    let movieInfoData;
-
     // get data from id
-
     try {
-      console.log('calling async api');
-
-      const getUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${movieId}`;
-      console.log(getUrl);
-      movieInfoData = await axios.get(getUrl);
-      setInfoModalData(movieInfoData.data);
+      const movieDetails = await getMovieDetails(movieId);
+      setInfoModalData(movieDetails);
+      const castInfo = await getMovieCast(movieId);
+      setMovieCast(castInfo);
       setShowInfoModal(true);
-      console.log(movieInfoData);
     } catch (error) {
       setInfoModalData([]);
       console.log(error);
@@ -84,54 +79,43 @@ export default function Search() {
     }
   };
 
-  // add to favourites handler
-
+  // useContext to inform users of movies added to DB
+  const { show, numberAdded, movieCheck } = useContext(FavouriteContext);
+  // handler for adding a favourite movie to the DB.
   const favHandler = async (i) => {
-    console.log('Hey we are in the add to favourites handler');
-    //  let i = e.target.attributes.getNamedItem('idx').value;
-    console.log(i, '  index value');
+    // checking whether the user has clicked on the same film
+    // twice
+    if (!movieCheck.idArray.includes(movieData[i].id)) {
+      numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+      window.localStorage.setItem(
+        'favCounter',
+        String(numberAdded.numFavourites + 1)
+      );
+      show.setShowStar(true);
+      const tempArray = movieCheck.idArray;
+      tempArray.push(movieData[i].id);
+      // console.log(tempArray);
+      movieCheck.setIdArray(tempArray);
+    }
 
-    const { id, title, poster_path, overview, release_date } = movieData[i];
-
-    const favData = {
-      id: id,
-      title: title,
-      poster_path: poster_path,
-      overview: overview,
-      release_date: release_date,
-    };
-
-    try {
-      console.log('calling async api');
-
-      const postUrl = `${process.env.REACT_APP_BE_PROD}/movies`;
-      console.log(postUrl);
-      const newFavouritesData = await axios.post(postUrl, favData);
-
-      // newFavouritesData contains new favourites list items
-      // this doesn't need to be used but can be console logged
-      // for info purposes
-      console.log(newFavouritesData);
-    } catch (error) {
-      console.log(error);
-      console.log('error in adding to favourites list');
-      alert('Error in adding to favourites collection');
+    // add film to database
+    if (addFavFilm(movieData[i])) {
+      console.log('Film added successfully');
+    } else {
+      console.error(`Error adding ${i} film`);
     }
   };
 
   // search the API for films
   const searchMovies = async (searchTerm) => {
+    // get rid of spaces in between words, replace with +
     const cleanedSearchTerm = searchTerm.replace(/\s{1,}/g, '+');
     const results = await filmByTitleActor(cleanedSearchTerm.trim());
     setMovieData(results.results);
-    //console.dir(results);
-    //console.dir(movieData);
   };
 
   return (
     <>
-      <NavBar />
-
       <Container className='mt-4' fluid>
         <div className='wrapper mt-4'>
           <SearchBar
@@ -145,7 +129,6 @@ export default function Search() {
                 <MovieCard
                   movie={item}
                   handler={mainHandler}
-                  //favhandler={favHandler}
                   idx={index}
                   buttonvariant={'1'}
                 />
@@ -158,8 +141,11 @@ export default function Search() {
           data={infoModalData}
           show={showInfoModal}
           handleClose={handleClose}
+          movieCast={movieCast}
         />
       </Container>
     </>
   );
 }
+
+export default Search;
