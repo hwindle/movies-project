@@ -2,8 +2,6 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 const SearchBar = ({ handleSearch, onChangeHandler, value }) => {
-  
-
   return (
     <Form onSubmit={handleSearch} id='form' className=' d-flex gap-3 w-50'>
       <Form.Control
