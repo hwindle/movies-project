@@ -80,16 +80,16 @@ function Search() {
   };
 
   // useContext to inform users of movies added to DB
-  const { show, numberAdded, movieCheck } = useContext(FavouriteContext);
+  const { show, numberClicked, movieCheck } = useContext(FavouriteContext);
   // handler for adding a favourite movie to the DB.
   const favHandler = async (i) => {
     // checking whether the user has clicked on the same film
     // twice
     if (!movieCheck.idArray.includes(movieData[i].id)) {
-      numberAdded.setNumFavourites(numberAdded.numFavourites + 1);
+      numberClicked.setNumFavourites(numberClicked.numFavourites + 1);
       window.localStorage.setItem(
         'favCounter',
-        String(numberAdded.numFavourites + 1)
+        String(numberClicked.numFavourites + 1)
       );
       show.setShowStar(true);
       const tempArray = movieCheck.idArray;
