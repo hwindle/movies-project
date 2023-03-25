@@ -1,11 +1,15 @@
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
+// auth imports
 import Login from '../auth/Login';
 import Profile from '../auth/Profile';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Link, useLocation } from 'react-router-dom';
 import Logout from '../auth/Logout';
+// little star counter
 import FavCounter from './FavCounter';
+// UI
+import { Container, Nav, Navbar } from 'react-bootstrap';
+
 
 function MovieNavBar() {
   const { isAuthenticated } = useAuth0();
@@ -19,18 +23,17 @@ function MovieNavBar() {
   ];
 
   return (
-    <Navbar className="navbar" expand="lg">
+    <Navbar className='navbar' expand='lg'>
       <Container>
-        <Navbar.Brand style={{ color: 'white', fontWeight: 'bold' }} href="#">
+        <Navbar.Brand style={{ color: 'white', fontWeight: 'bold' }} href='#'>
           My Film Favourites
         </Navbar.Brand>
 
         <Navbar>
           <Nav
-            className="me-auto my-2 my-lg-0 d-flex gap-3"
+            className='me-auto my-2 my-lg-0 d-flex gap-3'
             style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
+            navbarScroll>
             {isAuthenticated && <Navbar.Text>{<Profile />}</Navbar.Text>}
             {routeLinks.map((item, id) => (
               <Link
@@ -41,8 +44,7 @@ function MovieNavBar() {
                   display: 'flex',
                   alignItems: 'center',
                   fontWeight: currentPath === item.href ? 'bold' : 'medium',
-                }}
-              >
+                }}>
                 {item.title === 'Home'
                   ? item.title
                   : isAuthenticated
@@ -50,7 +52,7 @@ function MovieNavBar() {
                   : ''}
               </Link>
             ))}
-            <div style={{ marginLeft: '10px' }}>
+            <div style={{ marginLeft: 10 }}>
               <FavCounter />
             </div>
           </Nav>
