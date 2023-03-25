@@ -8,12 +8,13 @@ import { Tooltip } from 'react-tooltip';
 
 function FavCounter() {
   // destructure objects from context
-  const { show, numberAdded } = useContext(FavouriteContext);
+  const { show, numberClicked, totalFavs } = useContext(FavouriteContext);
 
   // stop warning for show
   console.log(show);
   // set favourites value in local storage, clear if in favourites page
-  if (numberAdded.numFavourites > 0) {
+  const numberOfNew = `${numberClicked.numFavourites} Added`;
+  if (totalFavs.counterFavs > 0) {
     return (
       <>
         <div
@@ -26,12 +27,12 @@ function FavCounter() {
           }}>
           <StarFill
             data-tooltip-id='favTip'
-            data-tooltip-content='New Favourites'
+            data-tooltip-content={numberOfNew}
             color='yellow'
             size={32}
           />
           <Tooltip id='favTip' />
-          {numberAdded.numFavourites < 10 && (
+          {totalFavs.counterFavs < 10 && (
             <span
               style={{
                 margin: '0 auto',
@@ -40,9 +41,9 @@ function FavCounter() {
                 top: 10,
                 fontSize: '0.65rem',
                 color: 'black',
-              }}>{` ${numberAdded.numFavourites}`}</span>
+              }}>{` ${totalFavs.counterFavs + numberClicked.numFavourites}`}</span>
           )}
-          {numberAdded.numFavourites >= 10 && (
+          {totalFavs.counterFavs >= 10 && (
             <span
               style={{
                 margin: '0 auto',
@@ -51,7 +52,7 @@ function FavCounter() {
                 top: 10,
                 fontSize: '0.55rem',
                 color: 'black',
-              }}>{` ${numberAdded.numFavourites}`}</span>
+              }}>{` ${totalFavs.counterFavs + numberClicked.numFavourites}`}</span>
           )}
         </div>
       </>

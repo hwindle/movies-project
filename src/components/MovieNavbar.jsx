@@ -53,7 +53,7 @@ function MovieNavBar() {
               </Link>
             ))}
             <div style={{ marginLeft: 10 }}>
-              <FavCounter />
+              {isAuthenticated && <FavCounter />}
             </div>
           </Nav>
           {!isAuthenticated && <Nav.Link>{<Login />}</Nav.Link>}
