@@ -4,7 +4,6 @@ import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import './InfoModal.css';
 
-
 function InfoModal(props) {
   // show the modal
   const [show, setShow] = useState(true);
@@ -67,7 +66,11 @@ function InfoModal(props) {
           }}>
           <div className='d-flex gap-5'>
             <Image
-              src={`https://image.tmdb.org/t/p/original/${props.data.poster_path}`}
+              src={
+                props.data.poster_path !== null
+                  ? `https://image.tmdb.org/t/p/original/${props.data.poster_path}`
+                  : './assets/blank_poster.jpg'
+              }
               style={{
                 borderRadius: 5,
                 boxShadow: 'rgba(46, 255, 14, 0.1) -1px -1px 57px 1px',
@@ -128,7 +131,11 @@ function InfoModal(props) {
                   key={cast.id}
                   style={{ display: 'grid', placeItems: 'center' }}>
                   <Image
-                    src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`}
+                    src={
+                      cast.profile_path !== null
+                        ? `https://image.tmdb.org/t/p/original/${cast.profile_path}`
+                        : './assets/blank_user.png'
+                    }
                     style={{
                       borderRadius: 5,
                       boxShadow: 'rgba(46, 255, 14, 0.1) -1px -1px 57px 1px',
