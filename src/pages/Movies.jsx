@@ -90,7 +90,7 @@ function Movies() {
   const { show, numberAdded } = useContext(FavouriteContext);
   numberAdded.setNumFavourites(0);
   show.setShowStar(false);
-  window.localStorage.setItem('favCounter', '0');
+  window.localStorage.setItem('favCounter', String(movieData?.length));
 
   return (
     <>

@@ -13,6 +13,7 @@ function FavCounter() {
   // stop warning for show
   console.log(show);
   // set favourites value in local storage, clear if in favourites page
+  const numberOfNew = `${numberAdded.numFavourites} New`;
   if (numberAdded.numFavourites > 0) {
     return (
       <>
@@ -26,7 +27,7 @@ function FavCounter() {
           }}>
           <StarFill
             data-tooltip-id='favTip'
-            data-tooltip-content='New Favourites'
+            data-tooltip-content={numberOfNew}
             color='yellow'
             size={32}
           />
