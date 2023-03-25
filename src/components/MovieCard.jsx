@@ -12,11 +12,16 @@ function MovieCard(props) {
   const { poster_path, title, release_date, overview } = movie;
   const { isAuthenticated } = useAuth0();
 
+  let posterImg = './imgs/blank_poster.jpg';
+  if (poster_path) {
+    posterImg = `https://image.tmdb.org/t/p/original/${poster_path}`;
+  }
+
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img
         variant='top'
-        src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+        src={posterImg}
       />
       <Card.Body>
         <Card.Title>{title}</Card.Title>

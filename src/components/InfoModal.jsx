@@ -128,7 +128,7 @@ function InfoModal(props) {
                   key={cast.id}
                   style={{ display: 'grid', placeItems: 'center' }}>
                   <Image
-                    src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`}
+                    src={cast.profile_path ? `https://image.tmdb.org/t/p/original/${cast.profile_path}` : './imgs/blank_user.png'}
                     style={{
                       borderRadius: 5,
                       boxShadow: 'rgba(46, 255, 14, 0.1) -1px -1px 57px 1px',
