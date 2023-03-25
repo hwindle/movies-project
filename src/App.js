@@ -1,13 +1,12 @@
-import "./App.css";
-import MovieRouter from "./Router/MovieRouter";
-import { useAuth0 } from "@auth0/auth0-react";
-import { UserContext } from "./UserContext/UserContext";
-import { useState } from "react";
-import { FavouriteContext } from "./FavouriteContexts/FavouriteContext";
-import Home from "./pages/Home";
-import { BrowserRouter as Router } from "react-router-dom";
-import MovieNavBar from "./components/MovieNavbar";
-
+import { useState } from 'react';
+import './App.css';
+import MovieRouter from './Router/MovieRouter';
+import { useAuth0 } from '@auth0/auth0-react';
+import { UserContext } from './UserContext/UserContext';
+import { FavouriteContext } from './FavouriteContexts/FavouriteContext';
+import Home from './pages/Home';
+import { BrowserRouter as Router } from 'react-router-dom';
+import MovieNavBar from './components/MovieNavbar';
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -15,7 +14,7 @@ function App() {
   const [showStar, setShowStar] = useState(false);
   const [idArray, setIdArray] = useState([]);
 
-  let fcount = 0;
+  let fcount = 0; // for local storage
   if (window.localStorage.getItem('favCounter')) {
     fcount = window.localStorage.getItem('favCounter');
   }

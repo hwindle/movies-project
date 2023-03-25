@@ -1,10 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FavouriteContext } from '../FavouriteContexts/FavouriteContext';
-import { getTrendingFilms, addFavFilm, getMovieCast, getMovieDetails } from '../MovieAPI/MovieAPI';
+import {
+  getTrendingFilms,
+  addFavFilm,
+  getMovieCast,
+  getMovieDetails,
+} from '../MovieAPI/MovieAPI';
 // UI imports
 import { Col, Container, Row } from 'react-bootstrap';
 import MovieCard from '../components/MovieCard';
 import InfoModal from '../components/InfoModal';
+
 
 function Home() {
   const [movieData, setMovieData] = useState([]);
@@ -39,7 +45,7 @@ function Home() {
     // console.log('Hey we are in the movie info handler');
 
     const movieId = movieData[i].id;
-    
+
     // get data from id
     try {
       const movieDetails = await getMovieDetails(movieId);
@@ -107,21 +113,9 @@ function Home() {
 
   return (
     <>
-      {/* <NavBar /> */}
       <Container className='mt-4' fluid>
         <Row md={2} xs={1} lg={3} xl={4} className='g-4'>
           {showEmpty && <p>Your List is Empty ¯\_(ツ)_/¯</p>}
-          {/* {updateVisibilty.showStar && (
-            <div style={{ position: 'static', top: '0', left: '0' }}>
-              <Star
-                data-tooltip-id="favTip"
-                data-tooltip-content="Add to Favourites"
-                color="gray"
-                size={32}
-              />
-            <Tooltip id="favTip" /> 
-            </div>
-          )} */}
           {showItems &&
             movieData.map((item, index) => (
               <Col key={index}>
@@ -129,8 +123,6 @@ function Home() {
                   movie={item}
                   buttonvariant='1'
                   handler={mainHandler}
-                  //favhandler={favHandler}
-                  //infohandler={infoHandler}
                   idx={index}
                 />
               </Col>

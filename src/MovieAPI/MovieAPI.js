@@ -90,3 +90,14 @@ export const addFavFilm = async (film) => {
     return false;
   }
 };
+
+// Delete one movie, returns updated movie array
+export const deleteFavMovie = async (mongoId) => {
+  const deleteUrl = `${process.env.REACT_APP_BE_PROD}/movies/${mongoId}`;
+  try {
+    const newData = await axios.delete(deleteUrl);
+    return newData;
+  } catch (err) {
+    console.error(`Error removing film no: ${mongoId} from DB: ${err}`);
+  }
+};
