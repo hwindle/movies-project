@@ -13,15 +13,22 @@ function MovieCard(props) {
   const { poster_path, title, release_date, overview } = movie;
   const { isAuthenticated } = useAuth0();
 
+  let posterImg = './imgs/blank_poster.jpg';
+  if (poster_path) {
+    posterImg = `https://image.tmdb.org/t/p/original/${poster_path}`;
+  }
+
   return (
+
     <Card style={{ width: "18rem" }}>
       <LazyLoadImage
         variant="top"
-        src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+        src={posterImg}
         width={"100%"}
         alt="movie"
         effect="blur"
         style={{ objectFit: "cover" }}
+
       />
       <Card.Body>
         <br />
