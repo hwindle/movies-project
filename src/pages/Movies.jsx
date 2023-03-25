@@ -81,16 +81,20 @@ function Movies() {
     setMovieData(results);
   };
 
+  // clear favourites counter now we are in favourites
+  const { show, numberClicked, totalFavs } = useContext(FavouriteContext);
+  numberClicked.setNumFavourites(0);
+  show.setShowStar(false);
+  console.log(`set counter favs: ${movieData?.length}`);
+  window.localStorage.setItem('favCounter', String(totalFavs.setCounterFavs));
+
   // useEffect - on first render
   useEffect(() => {
     getFavourites();
-  }, [movieData]);
+    totalFavs.setCounterFavs(movieData?.length);
+  }, [movieData, totalFavs]);
 
-  // clear favourites counter now we are in favourites
-  const { show, numberAdded } = useContext(FavouriteContext);
-  numberAdded.setNumFavourites(0);
-  show.setShowStar(false);
-  window.localStorage.setItem('favCounter', String(movieData?.length));
+  
 
   return (
     <>

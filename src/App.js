@@ -10,9 +10,10 @@ import MovieNavBar from './components/MovieNavbar';
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
-  // These two variables belong with the favourites context
+  // These three variables belong with the favourites context
   const [showStar, setShowStar] = useState(false);
   const [idArray, setIdArray] = useState([]);
+  const [counterFavs, setCounterFavs] = useState(0);
 
   let fcount = 0; // for local storage
   if (window.localStorage.getItem('favCounter')) {
@@ -24,8 +25,9 @@ function App() {
   // favourites context values object
   const favContextValues = {
     show: { showStar, setShowStar },
-    numberAdded: { numFavourites, setNumFavourites },
+    numberClicked: { numFavourites, setNumFavourites },
     movieCheck: { idArray, setIdArray },
+    totalFavs: { counterFavs, setCounterFavs },
   };
 
   return (
