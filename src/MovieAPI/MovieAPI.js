@@ -7,7 +7,7 @@ import axios from 'axios';
  */
 export const getTrendingFilms = async () => {
   const trending = await axios.get(
-    `${process.env.REACT_APP_BE_PROD}/moviesapi`
+    `https://api.themoviedb.org/3/trending/movie/week?language=en-US`
   );
   console.dir(trending.data);
   return trending.data;
@@ -22,7 +22,7 @@ export const filmByTitleActor = async (query) => {
   }
   try {
     const results = await axios.get(
-      `${process.env.REACT_APP_BE_PROD}/searchmovies?query=${query}`
+      `https://api.themoviedb.org/3/search/movie?query=${query}`
     );
     return results.data;
   } catch (err) {
@@ -36,7 +36,7 @@ export const filmByTitleActor = async (query) => {
  * @returns array of movie detail info
  */
 export const getMovieDetails = async (id) => {
-  const detailsUrl = `${process.env.REACT_APP_BE_PROD}/moviedetails?id=${id}`;
+  const detailsUrl = `https://api.themoviedb.org/3/movie/${id}`;
   const movieInfoData = await axios.get(detailsUrl);
   return movieInfoData.data;
 };
@@ -47,7 +47,7 @@ export const getMovieDetails = async (id) => {
  * @returns array of movie cast
  */
 export const getMovieCast = async (id) => {
-  const castUrl = `${process.env.REACT_APP_BE_PROD}/moviecast?id=${id}`;
+  const castUrl = `https://api.themoviedb.org/3/movie/${id}/credits`;
   const { data } = await axios.get(castUrl);
   return data.cast;
 };
