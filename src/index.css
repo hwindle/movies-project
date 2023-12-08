@@ -19,7 +19,7 @@ a {
 li {
   list-style: none;
 }
-
+/* from Bootstrap theme*/
 .navbar {
   background-color: #161616 !important;
 }
